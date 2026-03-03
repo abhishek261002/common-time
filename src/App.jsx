@@ -1,8 +1,18 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
+
+function MerchRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/shop/${id}`} replace />;
+}
 import Home from "./pages/Home.jsx";
 import TermsPage from "./pages/Terms.jsx";
-import Merch from "./pages/Merch.jsx";
-import ProductPage from "./pages/ProductPage.jsx";
+import Shop from "./pages/Shop.jsx";
+import ProductDetail from "./pages/ProductDetail.jsx";
+import Cart from "./pages/Cart.jsx";
+import Checkout from "./pages/Checkout.jsx";
+import Orders from "./pages/Orders.jsx";
+import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 
@@ -14,8 +24,15 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/terms" element={<TermsPage />} />
-          <Route path="/merch" element={<Merch />} />
-          <Route path="/merch/:id" element={<ProductPage />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:productId" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/merch" element={<Navigate to="/shop" replace />} />
+          <Route path="/merch/:id" element={<MerchRedirect />} />
         </Routes>
       </main>
       <Footer />
