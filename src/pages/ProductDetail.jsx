@@ -1,38 +1,68 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { supabase } from "../services/supabase";
-import { formatPrice } from "../utils/formatters";
+import { formatPrice, slugify } from "../utils/formatters";
 import { useCart } from "../context/CartContext";
 import QuantitySelector from "../components/QuantitySelector";
+import ProductGrid from "../components/commerce/ProductGrid";
 import toast from "react-hot-toast";
 
 export default function ProductDetail() {
-  const { productId } = useParams();
+  const { slug } = useParams();
   const [product, setProduct] = useState(null);
+  const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
 
   useEffect(() => {
     async function fetchProduct() {
-      if (!productId) return;
+      if (!slug) return;
       setLoading(true);
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("id", productId)
-        .eq("is_active", true)
-        .single();
-
-      if (error) {
+      const isUuid = /^[0-9a-f-]{36}$/i.test(slug);
+      let data = null;
+      let error = null;
+      if (isUuid) {
+        const res = await supabase
+          .from("products")
+          .select("*")
+          .eq("id", slug)
+          .eq("is_active", true)
+          .single();
+        data = res.data;
+        error = res.error;
+      } else {
+        const res = await supabase
+          .from("products")
+          .select("*")
+          .eq("slug", slug)
+          .eq("is_active", true)
+          .single();
+        if (res.data) {
+          data = res.data;
+        } else {
+          const allRes = await supabase.from("products").select("*").eq("is_active", true);
+          const match = (allRes.data || []).find((p) => slugify(p.name) === slug);
+          data = match || null;
+        }
+      }
+      if (!data) {
         setProduct(null);
+        setRelated([]);
       } else {
         setProduct(data);
+        const { data: rel } = await supabase
+          .from("products")
+          .select("*")
+          .eq("is_active", true)
+          .neq("id", data.id)
+          .limit(3);
+        setRelated(rel || []);
       }
       setLoading(false);
     }
     fetchProduct();
-  }, [productId]);
+  }, [slug]);
 
   const handleAddToCart = () => {
     if (!product) return;
@@ -42,48 +72,70 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <main className="min-h-screen py-16 flex items-center justify-center">
-        <div className="h-96 w-full max-w-2xl bg-gray-100 animate-pulse rounded-2xl" />
+      <main className="min-h-screen py-20 flex justify-center">
+        <div className="w-full max-w-5xl aspect-[16/10] bg-gray-100 animate-pulse" />
       </main>
     );
   }
 
   if (!product) {
     return (
-      <main className="min-h-screen py-16 text-center">
-        <p className="text-gray-600">Product not found.</p>
+      <main className="min-h-screen py-20 text-center">
+        <p className="text-gray-500">Product not found.</p>
+        <Link to="/shop" className="mt-4 inline-block text-gray-900 underline">
+          Back to Shop
+        </Link>
       </main>
     );
   }
 
+  const notes = product.tasting_notes || product.notes || product.flavor_notes;
+  const notesText = Array.isArray(notes) ? notes.join(", ") : (notes || "");
+
   return (
-    <main className="bg-white text-black min-h-screen py-16 px-4 flex justify-center">
-      <div className="w-full max-w-5xl">
-        <section className="flex flex-col lg:flex-row gap-12 items-center">
-          <div className="w-full lg:w-1/2">
+    <main className="min-h-screen py-16 md:py-24">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6">
+        <nav className="text-sm text-gray-500 mb-8">
+          <Link to="/" className="hover:text-gray-900">Home</Link>
+          {" / "}
+          <Link to="/shop" className="hover:text-gray-900">Shop</Link>
+          {" / "}
+          <span className="text-gray-900">{product.name}</span>
+        </nav>
+
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-24">
+          <div>
             <img
               src={product.image_url || "/newshero.jpg"}
               alt={product.name}
-              className="w-full h-[450px] object-cover rounded-2xl shadow-lg"
+              className="w-full aspect-[4/5] object-cover"
             />
           </div>
-
-          <div className="w-full lg:w-1/2">
-            <p className="text-sm uppercase tracking-wider text-gray-500 mb-2">
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">
               {product.category}
             </p>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-medium text-gray-900 mb-6 tracking-tight">
               {product.name}
             </h1>
-            <p className="text-gray-700 mb-6 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed mb-6">
               {product.description}
             </p>
-
-            <p className="text-2xl font-semibold mb-6">
+            {product.origin && (
+              <p className="text-sm text-gray-500 mb-4">
+                {product.origin}
+              </p>
+            )}
+            {notesText && (
+              <p className="text-sm text-gray-600 mb-6">
+                <span className="uppercase tracking-wider text-gray-500">Notes: </span>
+                {notesText}
+              </p>
+            )}
+            <p className="text-xl font-normal text-gray-900 mb-8">
               {formatPrice(product.price)}
             </p>
-
-            <div className="flex flex-wrap items-center gap-4 mb-6">
+            <div className="flex items-center gap-6 mb-8">
               <QuantitySelector
                 value={quantity}
                 onChange={setQuantity}
@@ -92,13 +144,22 @@ export default function ProductDetail() {
               />
               <button
                 onClick={handleAddToCart}
-                className="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 transition uppercase tracking-wide"
+                className="px-10 py-3 bg-[#6B5344] text-white text-sm uppercase tracking-wider font-medium hover:bg-[#5a4538] transition-colors"
               >
                 Add to Cart
               </button>
             </div>
           </div>
         </section>
+
+        {related.length > 0 && (
+          <section>
+            <h2 className="text-xl font-medium text-gray-900 mb-8">
+              You May Also Like
+            </h2>
+            <ProductGrid products={related} columns={3} />
+          </section>
+        )}
       </div>
     </main>
   );

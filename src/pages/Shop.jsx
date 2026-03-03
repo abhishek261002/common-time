@@ -3,9 +3,9 @@ import { supabase } from "../services/supabase";
 import ProductCard from "../components/ProductCard";
 
 const CATEGORIES = [
-  { value: "all", label: "All" },
+  { value: "all", label: "All Items" },
   { value: "coffee", label: "Coffee" },
-  { value: "merchandise", label: "Merchandise" },
+  { value: "merchandise", label: "Objects" },
 ];
 
 export default function Shop() {
@@ -50,10 +50,10 @@ export default function Shop() {
             <button
               key={cat.value}
               onClick={() => setCategory(cat.value)}
-              className={`px-6 py-2 text-sm uppercase tracking-wide border-b-2 transition-colors ${
+              className={`pb-1 border-b-2 transition-colors ${
                 category === cat.value
-                  ? "border-black text-black"
-                  : "border-transparent text-gray-500 hover:border-gray-400"
+                  ? "border-gray-900 text-gray-900"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
               }`}
             >
               {cat.label}
@@ -75,7 +75,7 @@ export default function Shop() {
             No products found.
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

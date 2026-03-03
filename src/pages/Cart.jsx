@@ -63,8 +63,8 @@ export default function Cart() {
   }
 
   return (
-    <main className="min-h-screen py-16 px-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-8 uppercase">Cart</h1>
+    <main className="min-h-screen py-20 md:py-28 px-4 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-medium mb-12">Cart</h1>
 
       {loading ? (
         <div className="space-y-4">
@@ -77,7 +77,7 @@ export default function Cart() {
           {cartRows.map((row) => (
             <div
               key={row.product_id}
-              className="flex gap-4 md:gap-6 items-center border-b border-gray-200 pb-6"
+              className="flex gap-6 md:gap-8 items-center border-b border-gray-100 pb-8"
             >
               <img
                 src={row.product.image_url || "/newshero.jpg"}
@@ -109,13 +109,13 @@ export default function Cart() {
       )}
 
       {cartRows.length > 0 && (
-        <div className="mt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <p className="text-lg font-bold">
+        <div className="mt-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+          <p className="text-xl font-medium">
             Total: {formatPrice(total)}
           </p>
           <Link
             to="/checkout"
-            className="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 transition uppercase"
+            className="bg-[#6B5344] text-white px-10 py-3 font-medium hover:bg-[#5a4538] transition uppercase tracking-wider text-sm"
           >
             Proceed to Checkout
           </Link>

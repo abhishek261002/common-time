@@ -34,9 +34,12 @@ export default function Header() {
 
         {/* LOCATION */}
         <div className="group h-full flex items-center relative">
-          <span className="nav-link text-xs uppercase font-medium tracking-[0.15em] text-[#1A1A1A]">
+          <Link
+            to="/locations"
+            className="nav-link text-xs uppercase font-medium tracking-[0.15em] text-[#1A1A1A]"
+          >
             LOCATION
-          </span>
+          </Link>
 
           <div className="dropdown-panel absolute top-[100px] left-0 w-screen bg-[#F9F7F2] border-t border-gray-100 shadow-sm min-h-[400px]">
             <div className="max-w-7xl mx-auto w-full flex items-start justify-between py-16 px-12 lg:px-24">
@@ -70,9 +73,12 @@ export default function Header() {
 
         {/* MENU */}
         <div className="group h-full flex items-center relative">
-          <span className="nav-link text-xs uppercase font-medium tracking-[0.15em] text-[#1A1A1A]">
+          <Link
+            to="/menu"
+            className="nav-link text-xs uppercase font-medium tracking-[0.15em] text-[#1A1A1A]"
+          >
             MENU
-          </span>
+          </Link>
 
           <div className="dropdown-panel absolute top-[100px] left-0 w-screen bg-[#F9F7F2] border-t border-gray-100 shadow-sm min-h-[400px]">
             <div className="max-w-7xl mx-auto w-full flex items-start justify-between py-16 px-12 lg:px-24">

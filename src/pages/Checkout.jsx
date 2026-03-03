@@ -5,6 +5,7 @@ import { formatPrice } from "../utils/formatters";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { createOrder, verifyPayment } from "../services/api";
+import OrderSummary from "../components/commerce/OrderSummary";
 import toast from "react-hot-toast";
 
 const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
@@ -166,19 +167,20 @@ export default function Checkout() {
   if (!user) return null;
 
   return (
-    <main className="min-h-screen py-16 px-4 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-8 uppercase">Checkout</h1>
-
-      <div className="space-y-6 mb-8">
-        <h2 className="text-sm uppercase tracking-wider text-gray-500">Shipping Address</h2>
-        <div className="grid gap-4">
+    <main className="min-h-screen py-20 md:py-28">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div>
+          <h1 className="text-2xl font-medium mb-10">Checkout</h1>
+          <div className="space-y-6">
+            <h2 className="text-xs uppercase tracking-wider text-gray-500">Shipping Address</h2>
+            <div className="grid gap-5">
           <input
             type="text"
             name="name"
             placeholder="Full Name *"
             value={form.name}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-200 rounded"
+            className="w-full px-4 py-3 border border-gray-200 rounded text-gray-900 placeholder:text-gray-400"
           />
           <input
             type="tel"
@@ -228,20 +230,21 @@ export default function Checkout() {
             placeholder="Pincode *"
             value={form.pincode}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-200 rounded"
+            className="w-full px-4 py-3 border border-gray-200 rounded text-gray-900 placeholder:text-gray-400"
           />
+            </div>
+          </div>
+          <button
+            onClick={handlePay}
+            disabled={payLoading}
+            className="w-full mt-8 py-4 bg-[#6B5344] text-white text-sm uppercase tracking-wider font-medium hover:bg-[#5a4538] disabled:opacity-70 transition-colors"
+          >
+            {payLoading ? "Processing..." : "Continue to Payment"}
+          </button>
         </div>
-      </div>
-
-      <div className="border-t border-gray-200 pt-6">
-        <p className="text-lg font-bold mb-4">Total: {formatPrice(total)}</p>
-        <button
-          onClick={handlePay}
-          disabled={payLoading}
-          className="w-full bg-black text-white py-3 rounded-full font-medium hover:bg-gray-800 disabled:opacity-70 uppercase"
-        >
-          {payLoading ? "Processing..." : "Pay Now"}
-        </button>
+        <div>
+          <OrderSummary items={cartRows} total={total} />
+        </div>
       </div>
     </main>
   );

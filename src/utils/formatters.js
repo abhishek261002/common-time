@@ -1,4 +1,15 @@
 /**
+ * Slugify for product URLs
+ */
+export function slugify(str) {
+  if (!str) return "";
+  return String(str)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+/**
  * Price formatter: paise to INR display
  */
 export function formatPrice(paise) {

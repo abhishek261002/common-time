@@ -11,14 +11,20 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-white py-8 md:py-12 text-gray-900 text-sm border-t border-gray-200">
+    <footer className="bg-[#fafaf8] py-10 md:py-14 text-gray-900 text-sm border-t border-gray-100">
       <div className="max-w-4xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex flex-wrap justify-center gap-4">
-          <Link to="/terms" className="hover:underline">
+          <Link to="/terms" className="hover:underline text-gray-600">
             Terms & Conditions
           </Link>
-          <Link to="/shop" className="hover:underline">
+          <Link to="/shop" className="hover:underline text-gray-600">
             Shop
+          </Link>
+          <Link to="/locations" className="hover:underline text-gray-600">
+            Locations
+          </Link>
+          <Link to="/about" className="hover:underline text-gray-600">
+            About
           </Link>
         </div>
         <form

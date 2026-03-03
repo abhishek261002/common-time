@@ -8,6 +8,9 @@ import Home from "./pages/Home.jsx";
 import TermsPage from "./pages/Terms.jsx";
 import Shop from "./pages/Shop.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx";
+import Locations from "./pages/Locations.jsx";
+import Menu from "./pages/Menu.jsx";
+import About from "./pages/About.jsx";
 import Cart from "./pages/Cart.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Orders from "./pages/Orders.jsx";
@@ -25,7 +28,10 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/:productId" element={<ProductDetail />} />
+          <Route path="/shop/:slug" element={<ProductDetail />} />
+          <Route path="/locations" element={<Locations />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/about" element={<About />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
