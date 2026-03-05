@@ -21,7 +21,6 @@ export default function ProductDetail() {
       setLoading(true);
       const isUuid = /^[0-9a-f-]{36}$/i.test(slug);
       let data = null;
-      let error = null;
       if (isUuid) {
         const res = await supabase
           .from("products")
@@ -30,7 +29,6 @@ export default function ProductDetail() {
           .eq("is_active", true)
           .single();
         data = res.data;
-        error = res.error;
       } else {
         const res = await supabase
           .from("products")

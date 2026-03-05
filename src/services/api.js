@@ -12,27 +12,44 @@ function getFunctionsUrl() {
   return url.replace(".supabase.co", ".supabase.co/functions/v1");
 }
 
-export async function createOrder(items, shippingAddress) {
+// Helper to get auth headers
+async function getAuthHeaders() {
   const { data: { session } } = await supabase.auth.getSession();
+
   if (!session?.access_token) {
-    throw new Error("Not authenticated");
+    throw new Error("User not authenticated");
   }
+
+  return {
+    Authorization: `Bearer ${session.access_token}`,
+    apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+    "Content-Type": "application/json",
+  };
+}
+
+export async function createOrder(items, shippingAddress) {
+  const headers = await getAuthHeaders();
+
   const url = `${getFunctionsUrl()}/create-order`;
+
   const res = await axios.post(
     url,
     { items, shipping_address: shippingAddress },
-    {
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-        "Content-Type": "application/json",
-      },
-    }
+    { headers }
   );
+
   return res.data;
 }
 
-export async function verifyPayment(razorpayOrderId, razorpayPaymentId, razorpaySignature) {
+export async function verifyPayment(
+  razorpayOrderId,
+  razorpayPaymentId,
+  razorpaySignature
+) {
+  const headers = await getAuthHeaders();
+
   const url = `${getFunctionsUrl()}/verify-payment`;
+
   const res = await axios.post(
     url,
     {
@@ -40,7 +57,8 @@ export async function verifyPayment(razorpayOrderId, razorpayPaymentId, razorpay
       razorpay_payment_id: razorpayPaymentId,
       razorpay_signature: razorpaySignature,
     },
-    { headers: { "Content-Type": "application/json" } }
+    { headers }
   );
+
   return res.data;
 }

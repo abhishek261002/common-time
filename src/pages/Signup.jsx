@@ -7,15 +7,28 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
+
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!fullName || !email || !phone || !password) {
+      toast.error("All fields are required");
+      return;
+    }
+
     setLoading(true);
+
     try {
-      await signUp(email, password, { fullName: fullName || undefined });
+      await signUp(email, password, {
+        fullName,
+        phone,
+      });
+
       toast.success("Account created. You can sign in now.");
       navigate("/login", { replace: true });
     } catch (err) {
@@ -32,13 +45,16 @@ export default function Signup() {
         <p className="text-gray-600 mb-8">Create your account</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+
           <input
             type="text"
-            placeholder="Full Name (optional)"
+            placeholder="Full Name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            required
             className="w-full px-4 py-3 border border-gray-200 rounded"
           />
+
           <input
             type="email"
             placeholder="Email"
@@ -47,6 +63,16 @@ export default function Signup() {
             required
             className="w-full px-4 py-3 border border-gray-200 rounded"
           />
+
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+            className="w-full px-4 py-3 border border-gray-200 rounded"
+          />
+
           <input
             type="password"
             placeholder="Password"
@@ -56,6 +82,7 @@ export default function Signup() {
             minLength={6}
             className="w-full px-4 py-3 border border-gray-200 rounded"
           />
+
           <button
             type="submit"
             disabled={loading}
@@ -63,6 +90,7 @@ export default function Signup() {
           >
             {loading ? "Creating..." : "Sign Up"}
           </button>
+
         </form>
 
         <p className="mt-6 text-center text-gray-600">

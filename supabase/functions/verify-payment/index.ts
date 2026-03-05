@@ -48,6 +48,26 @@ serve(async (req) => {
       );
     }
 
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const token = authHeader.replace("Bearer ", "");
+    const {
+      data: { user },
+      error: authError,
+    } = await supabaseAdmin.auth.getUser(token);
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: "Invalid or expired token" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const body: VerifyPaymentBody = await req.json();
 
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = body;
@@ -56,6 +76,18 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ error: "Missing payment verification fields" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const devMode = Deno.env.get("DEV_MODE") === "true";
+
+    if (devMode) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: "Payment auto verified (dev mode)"
+        }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 

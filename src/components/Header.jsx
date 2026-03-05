@@ -93,6 +93,9 @@ export default function Header() {
         {/* AUTH LINKS */}
         {user ? (
           <>
+            <Link to="/profile" className="nav-link text-xs uppercase tracking-[0.15em]">
+              PROFILE
+            </Link>
             <Link to="/orders" className="nav-link text-xs uppercase tracking-[0.15em]">
               ORDERS
             </Link>

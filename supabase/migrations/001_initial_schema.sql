@@ -4,9 +4,6 @@
 -- Order status enum
 CREATE TYPE order_status AS ENUM ('pending', 'paid', 'failed', 'cancelled');
 
--- Extensions (if not already enabled)
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 -- Profiles (extends auth.users)
 CREATE TABLE profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -18,12 +15,12 @@ CREATE TABLE profiles (
 
 -- Products
 CREATE TABLE products (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   description TEXT,
-  price INTEGER NOT NULL, -- in paise (INR)
+  price INTEGER NOT NULL,
   image_url TEXT,
-  category TEXT NOT NULL, -- 'coffee' | 'merchandise'
+  category TEXT NOT NULL,
   stock_quantity INTEGER NOT NULL DEFAULT 0,
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW()
@@ -34,7 +31,7 @@ CREATE INDEX idx_products_is_active ON products(is_active);
 
 -- Addresses
 CREATE TABLE addresses (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
   phone TEXT NOT NULL,
@@ -50,10 +47,10 @@ CREATE INDEX idx_addresses_user_id ON addresses(user_id);
 
 -- Orders
 CREATE TABLE orders (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   status order_status NOT NULL DEFAULT 'pending',
-  total_amount INTEGER NOT NULL, -- in paise
+  total_amount INTEGER NOT NULL,
   razorpay_order_id TEXT,
   razorpay_payment_id TEXT,
   shipping_address_id UUID REFERENCES addresses(id),
@@ -72,11 +69,11 @@ CREATE INDEX idx_orders_created_at ON orders(created_at DESC);
 
 -- Order Items
 CREATE TABLE order_items (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
   product_id UUID NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
   quantity INTEGER NOT NULL,
-  price_at_purchase INTEGER NOT NULL, -- in paise, at time of order
+  price_at_purchase INTEGER NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -100,15 +97,14 @@ CREATE TRIGGER on_auth_user_created
   FOR EACH ROW
   EXECUTE FUNCTION public.handle_new_user();
 
--- Row Level Security (RLS)
-
+-- Enable RLS
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE addresses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 
--- Profiles: users can read/update own
+-- Profiles
 CREATE POLICY "Users can view own profile"
   ON profiles FOR SELECT
   USING (auth.uid() = id);
@@ -119,9 +115,9 @@ CREATE POLICY "Users can update own profile"
 
 CREATE POLICY "Profiles are inserted by trigger"
   ON profiles FOR INSERT
-  WITH CHECK (true); -- trigger uses SECURITY DEFINER
+  WITH CHECK (true);
 
--- Products: public read, only service_role for write
+-- Products
 CREATE POLICY "Products are viewable by everyone"
   ON products FOR SELECT
   USING (true);
@@ -138,7 +134,7 @@ CREATE POLICY "Only service role can delete products"
   ON products FOR DELETE
   USING (auth.role() = 'service_role');
 
--- Addresses: users can CRUD own
+-- Addresses
 CREATE POLICY "Users can view own addresses"
   ON addresses FOR SELECT
   USING (auth.uid() = user_id);
@@ -155,7 +151,7 @@ CREATE POLICY "Users can delete own addresses"
   ON addresses FOR DELETE
   USING (auth.uid() = user_id);
 
--- Orders: users can read own; service role can update (status, payment_id)
+-- Orders
 CREATE POLICY "Users can view own orders"
   ON orders FOR SELECT
   USING (auth.uid() = user_id);
@@ -168,7 +164,7 @@ CREATE POLICY "Only service role can update orders"
   ON orders FOR UPDATE
   USING (auth.role() = 'service_role');
 
--- Order items: users can read via order ownership
+-- Order Items
 CREATE POLICY "Users can view order items for own orders"
   ON order_items FOR SELECT
   USING (
