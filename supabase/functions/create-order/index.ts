@@ -38,7 +38,6 @@ interface Product {
 }
 
 serve(async (req: Request) => {
-
   /* ---------- CORS PREFLIGHT ---------- */
 
   if (req.method === "OPTIONS") {
@@ -49,7 +48,6 @@ serve(async (req: Request) => {
   }
 
   try {
-
     if (req.method !== "POST") {
       return new Response(
         JSON.stringify({ error: "Method not allowed" }),
@@ -62,9 +60,12 @@ serve(async (req: Request) => {
 
     /* ---------- AUTH ---------- */
 
-    const rawAuthHeader =
-      req.headers.get("Authorization") ?? req.headers.get("authorization") ?? "";
-    const authHeader = rawAuthHeader.trim();
+    const authHeader = req.headers.get("Authorization") ?? "";
+
+    console.log("[create-order] Auth header check:", {
+      exists: !!authHeader,
+      length: authHeader.length,
+    });
 
     if (!authHeader) {
       return new Response(
@@ -86,18 +87,43 @@ serve(async (req: Request) => {
       );
     }
 
-    const userClient = createUserClient(req);
+    // Extract the token
+    const token = authHeader.replace("Bearer ", "").trim();
+
+    // Verify token with admin client (most reliable method)
+    console.log("[create-order] Verifying token...");
 
     const {
       data: { user },
       error: authError,
+    } = await supabaseAdmin.auth.admin.getUserById(
+      // We need to decode the JWT to get user ID, OR
+      // Use the userClient to get the current user
+      ""
+    );
+
+    // Better approach: Use userClient which has the token in headers
+    const userClient = createUserClient(req);
+
+    // This will work with the Authorization header we set
+    const {
+      data: { user: currentUser },
+      error: userError,
     } = await userClient.auth.getUser();
 
-    if (authError) {
-      console.error("AUTH FAILED:", authError);
+    console.log("[create-order] User auth result:", {
+      hasUser: !!currentUser,
+      error: userError?.message,
+    });
+
+    if (userError || !currentUser) {
+      console.error("[create-order] Auth failed:", userError);
 
       return new Response(
-        JSON.stringify({ error: "Invalid or expired token" }),
+        JSON.stringify({
+          error: "Invalid or expired token",
+          details: userError?.message,
+        }),
         {
           status: 401,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -105,17 +131,9 @@ serve(async (req: Request) => {
       );
     }
 
-    if (!user) {
-      return new Response(
-        JSON.stringify({ error: "User not authenticated" }),
-        {
-          status: 401,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
-      );
-    }
+    const userId = currentUser.id;
 
-    const userId = user.id;
+    console.log("[create-order] User authenticated:", userId);
 
     /* ---------- BODY ---------- */
 
@@ -156,9 +174,12 @@ serve(async (req: Request) => {
 
     const { data: products, error: productsError } = await supabaseAdmin
       .from("products")
-      .select("id, name, price, stock_quantity, is_active");
+      .select("id, name, price, stock_quantity, is_active")
+      .in("id", productIds);
 
     if (productsError || !products || products.length === 0) {
+      console.error("[create-order] Products error:", productsError);
+
       return new Response(
         JSON.stringify({ error: "Invalid products" }),
         {
@@ -181,7 +202,6 @@ serve(async (req: Request) => {
     }[] = [];
 
     for (const item of body.items) {
-
       const product = productMap.get(item.product_id);
 
       if (!product) {
@@ -208,7 +228,9 @@ serve(async (req: Request) => {
 
       if (product.stock_quantity < qty) {
         return new Response(
-          JSON.stringify({ error: `Insufficient stock for ${product.name}` }),
+          JSON.stringify({
+            error: `Insufficient stock for ${product.name}`,
+          }),
           {
             status: 400,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -217,7 +239,6 @@ serve(async (req: Request) => {
       }
 
       const lineTotal = product.price * qty;
-
       totalAmount += lineTotal;
 
       orderItems.push({
@@ -227,7 +248,7 @@ serve(async (req: Request) => {
       });
     }
 
-    /* ---------- DEV MODE ---------- */
+    /* ---------- CREATE ORDER ---------- */
 
     const devMode = Deno.env.get("DEV_MODE") === "true";
 
@@ -240,6 +261,8 @@ serve(async (req: Request) => {
     ]
       .filter(Boolean)
       .join(", ");
+
+    console.log("[create-order] Creating order for user:", userId);
 
     const { data: order, error: orderError } = await supabaseAdmin
       .from("orders")
@@ -258,6 +281,8 @@ serve(async (req: Request) => {
       .single();
 
     if (orderError || !order) {
+      console.error("[create-order] Order creation failed:", orderError);
+
       return new Response(
         JSON.stringify({ error: "Failed to create order" }),
         {
@@ -266,6 +291,10 @@ serve(async (req: Request) => {
         }
       );
     }
+
+    console.log("[create-order] Order created:", order.id);
+
+    /* ---------- CREATE ORDER ITEMS ---------- */
 
     const orderItemsRows = orderItems.map((oi) => ({
       order_id: order.id,
@@ -279,6 +308,8 @@ serve(async (req: Request) => {
       .insert(orderItemsRows);
 
     if (itemsError) {
+      console.error("[create-order] Items creation failed:", itemsError);
+
       return new Response(
         JSON.stringify({ error: "Failed to create order items" }),
         {
@@ -288,9 +319,11 @@ serve(async (req: Request) => {
       );
     }
 
-    const razorpayOrderId = devMode
-      ? `dev_order_${Date.now()}`
-      : `${order.id}`;
+    console.log("[create-order] Order items created");
+
+    /* ---------- RESPONSE ---------- */
+
+    const razorpayOrderId = devMode ? `dev_order_${Date.now()}` : `${order.id}`;
 
     return new Response(
       JSON.stringify({
@@ -304,18 +337,18 @@ serve(async (req: Request) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     );
-
   } catch (err) {
-
-    console.error("create-order error:", err);
+    console.error("[create-order] Error:", err);
 
     return new Response(
-      JSON.stringify({ error: "Internal server error" }),
+      JSON.stringify({
+        error: "Internal server error",
+        message: err instanceof Error ? err.message : "Unknown error",
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     );
   }
-
 });
