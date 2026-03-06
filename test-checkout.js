@@ -22,7 +22,7 @@ const mockProducts = [
   }
 ];
 
-const mockShippingAddress = {
+  const MOCK_SHIPPING_ADDRESS = {
   name: "John Doe",
   phone: "1234567890",
   address_line1: "123 Main St",

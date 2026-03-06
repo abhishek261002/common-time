@@ -55,6 +55,10 @@ async function getAuthHeaders() {
       throw new Error("Session exists but missing access_token");
     }
 
+    if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
+      throw new Error("VITE_SUPABASE_ANON_KEY is not configured");
+    }
+
     const headers = {
       Authorization: `Bearer ${session.access_token}`,
       apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
