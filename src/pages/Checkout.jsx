@@ -21,8 +21,7 @@ function loadRazorpay() {
     document.body.appendChild(script);
   });
 }
-const { data } = await supabase.auth.getSession()
-console.log(data.session)
+
 export default function Checkout() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
@@ -119,9 +118,15 @@ export default function Checkout() {
     setPayLoading(true);
 
     try {
+      console.log("Step 1: Validating form...");
+      console.log("Step 2: Creating order with items:", items);
+      
       const response = await createOrder(items, form);
+      
+      console.log("Step 3: Order response received:", response);
 
       if (response.dev_mode) {
+        console.log("Step 4: Dev mode detected, completing order locally");
         clearCart();
         toast.success("Order placed successfully (dev mode)!");
         navigate("/orders", { replace: true });
@@ -130,6 +135,12 @@ export default function Checkout() {
       }
 
       const { razorpay_order_id, amount } = response;
+
+      if (!razorpay_order_id || !amount) {
+        toast.error("Invalid order response from server - missing razorpay_order_id or amount");
+        setPayLoading(false);
+        return;
+      }
 
       const Razorpay = await loadRazorpay();
 
@@ -165,8 +176,9 @@ export default function Checkout() {
 
             navigate("/orders", { replace: true });
           } catch (err) {
+            console.error("Payment verification error:", err);
             toast.error(
-              err?.response?.data?.error || "Payment verification failed"
+              err?.response?.data?.error || err?.message || "Payment verification failed"
             );
           } finally {
             setPayLoading(false);
@@ -187,12 +199,29 @@ export default function Checkout() {
 
       rzp.open();
     } catch (err) {
-      const msg =
-        err?.response?.data?.error ||
-        err?.message ||
-        "Something went wrong";
+      console.error("Checkout error:", {
+        message: err.message,
+        status: err.response?.status,
+        errorData: err.response?.data,
+        fullError: err
+      });
+      
+      // Show appropriate error message
+      let errorMsg = "Something went wrong";
+      
+      if (err.message?.includes("No active session")) {
+        errorMsg = "Your session has expired, please login again";
+      } else if (err.message?.includes("User not authenticated")) {
+        errorMsg = "You must be logged in to checkout";
+      } else if (err.response?.status === 401) {
+        errorMsg = "Authentication failed: " + (err.response.data?.error || "Invalid token");
+      } else if (err.response?.status === 400) {
+        errorMsg = err.response.data?.error || "Invalid request";
+      } else if (err.message) {
+        errorMsg = err.message;
+      }
 
-      toast.error(msg);
+      toast.error(errorMsg);
 
       setPayLoading(false);
     }

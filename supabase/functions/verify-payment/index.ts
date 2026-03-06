@@ -82,6 +82,33 @@ serve(async (req) => {
     const devMode = Deno.env.get("DEV_MODE") === "true";
 
     if (devMode) {
+      // In dev mode, just mark the order as paid without Razorpay verification
+      const { data: order, error: orderFetchError } = await supabaseAdmin
+        .from("orders")
+        .select("id, status, total_amount")
+        .eq("id", razorpay_order_id.replace("dev_order_", ""))
+        .single();
+
+      if (!order) {
+        const { data: orderByRazorpay } = await supabaseAdmin
+          .from("orders")
+          .select("id, status, total_amount")
+          .limit(1)
+          .single();
+
+        if (orderByRazorpay) {
+          await supabaseAdmin
+            .from("orders")
+            .update({ status: "paid" })
+            .eq("id", orderByRazorpay.id);
+        }
+      } else {
+        await supabaseAdmin
+          .from("orders")
+          .update({ status: "paid" })
+          .eq("id", order.id);
+      }
+
       return new Response(
         JSON.stringify({
           success: true,

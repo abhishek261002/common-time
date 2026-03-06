@@ -14,31 +14,109 @@ function getFunctionsUrl() {
 
 // Helper to get auth headers
 async function getAuthHeaders() {
-  const { data: { session } } = await supabase.auth.getSession();
+  try {
+    console.log(">>> Getting session from Supabase...");
+    const sessionResult = await supabase.auth.getSession();
+    
+    console.log(">>> Session result:", {
+      hasData: !!sessionResult.data,
+      hasError: !!sessionResult.error,
+      errorMsg: sessionResult.error?.message,
+      dataKeys: sessionResult.data ? Object.keys(sessionResult.data) : []
+    });
 
-  if (!session?.access_token) {
-    throw new Error("User not authenticated");
+    const { data, error } = sessionResult;
+
+    if (error) {
+      console.error(">>> Session error:", error);
+      throw new Error("Failed to get session: " + error.message);
+    }
+
+    if (!data) {
+      console.error(">>> No data returned from getSession");
+      throw new Error("No session data from Supabase");
+    }
+
+    const session = data.session;
+    
+    console.log(">>> Session object:", {
+      sessionExists: !!session,
+      sessionKeys: session ? Object.keys(session) : [],
+      hasAccessToken: !!session?.access_token,
+      tokenLength: session?.access_token ? session.access_token.length : 0,
+      tokenPreview: session?.access_token ? session.access_token.substring(0, 20) + "..." : "NONE"
+    });
+
+    if (!session) {
+      throw new Error("No active session - user must be logged in");
+    }
+
+    if (!session.access_token) {
+      throw new Error("Session exists but missing access_token");
+    }
+
+    const headers = {
+      Authorization: `Bearer ${session.access_token}`,
+      apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+      "Content-Type": "application/json",
+    };
+
+    console.log(">>> Headers ready with Authorization token");
+
+    return headers;
+  } catch (error) {
+    console.error(">>> getAuthHeaders failed:", error.message);
+    throw error;
   }
-
-  return {
-    Authorization: `Bearer ${session.access_token}`,
-    apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
-    "Content-Type": "application/json",
-  };
 }
 
 export async function createOrder(items, shippingAddress) {
-  const headers = await getAuthHeaders();
+  try {
+    console.log("1. Getting auth headers...");
+    const headers = await getAuthHeaders();
 
-  const url = `${getFunctionsUrl()}/create-order`;
+    const url = `${getFunctionsUrl()}/create-order`;
 
-  const res = await axios.post(
-    url,
-    { items, shipping_address: shippingAddress },
-    { headers }
-  );
+    if (!url) {
+      throw new Error("Functions URL not configured");
+    }
 
-  return res.data;
+    console.log("2. Preparing request...", {
+      url,
+      itemsCount: items.length,
+      hasShipping: !!shippingAddress
+    });
+
+    console.log("3. Request headers:", {
+      Authorization: headers.Authorization ? "Bearer ..." : "MISSING",
+      apikey: headers.apikey ? "present" : "MISSING",
+      "Content-Type": headers["Content-Type"]
+    });
+
+    console.log("4. Sending POST request to:", url);
+    
+    const res = await axios.post(
+      url,
+      { items, shipping_address: shippingAddress },
+      { headers }
+    );
+
+    console.log("5. Response received:", {
+      status: res.status,
+      hasOrderId: !!res.data?.order_id,
+      devMode: res.data?.dev_mode
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Create order error:", {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+      headers: error.response?.headers
+    });
+    throw error;
+  }
 }
 
 export async function verifyPayment(
@@ -46,19 +124,26 @@ export async function verifyPayment(
   razorpayPaymentId,
   razorpaySignature
 ) {
-  const headers = await getAuthHeaders();
+  try {
+    const headers = await getAuthHeaders();
 
-  const url = `${getFunctionsUrl()}/verify-payment`;
+    const url = `${getFunctionsUrl()}/verify-payment`;
 
-  const res = await axios.post(
-    url,
-    {
-      razorpay_order_id: razorpayOrderId,
-      razorpay_payment_id: razorpayPaymentId,
-      razorpay_signature: razorpaySignature,
-    },
-    { headers }
-  );
+    console.log("Verifying payment at:", url);
 
-  return res.data;
+    const res = await axios.post(
+      url,
+      {
+        razorpay_order_id: razorpayOrderId,
+        razorpay_payment_id: razorpayPaymentId,
+        razorpay_signature: razorpaySignature,
+      },
+      { headers }
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Verify payment error:", error.response?.data || error.message);
+    throw error;
+  }
 }
