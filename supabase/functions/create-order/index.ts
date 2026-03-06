@@ -3,7 +3,7 @@
  * Accepts cart items, validates products, creates order and order_items
  */
 
-/// <reference lib="deno.ns" />
+/// <reference lib="deno.window" />
 
 import { serve } from "https://deno.land/std@0.192.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
@@ -156,8 +156,7 @@ serve(async (req: Request) => {
 
     const { data: products, error: productsError } = await supabaseAdmin
       .from("products")
-      .select("id, name, price, stock_quantity, is_active")
-      .in("id", productIds);
+      .select("id, name, price, stock_quantity, is_active");
 
     if (productsError || !products || products.length === 0) {
       return new Response(

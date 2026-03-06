@@ -44,7 +44,9 @@ async function getAuthHeaders() {
       sessionKeys: session ? Object.keys(session) : [],
       hasAccessToken: !!session?.access_token,
       tokenLength: session?.access_token ? session.access_token.length : 0,
-      tokenPreview: session?.access_token ? session.access_token.substring(0, 20) + "..." : "NONE"
+      tokenPreview: session?.access_token ? session.access_token.substring(0, 20) + "..." : "NONE",
+      expiresAt: session?.expires_at ? new Date(session.expires_at * 1000).toISOString() : "UNKNOWN",
+      isExpired: session?.expires_at ? Date.now() > session.expires_at * 1000 : "UNKNOWN"
     });
 
     if (!session) {
@@ -55,13 +57,33 @@ async function getAuthHeaders() {
       throw new Error("Session exists but missing access_token");
     }
 
+    // Check token expiration
+    const expiresAt = session.expires_at * 1000;
+    if (Date.now() > expiresAt) {
+      console.warn(">>> Token is expired! Attempting refresh...");
+      
+      const refreshResult = await supabase.auth.refreshSession();
+      if (refreshResult.error || !refreshResult.data.session) {
+        throw new Error("Token expired and refresh failed - please re-login");
+      }
+      
+      const refreshedSession = refreshResult.data.session;
+      console.log(">>> Token refreshed successfully");
+      
+      return {
+        Authorization: `Bearer ${refreshedSession.access_token.trim()}`,
+        apikey: import.meta.env.VITE_SUPABASE_ANON_KEY?.trim(),
+        "Content-Type": "application/json",
+      };
+    }
+
     if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
       throw new Error("VITE_SUPABASE_ANON_KEY is not configured");
     }
 
     const headers = {
-      Authorization: `Bearer ${session.access_token}`,
-      apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${session.access_token.trim()}`,
+      apikey: import.meta.env.VITE_SUPABASE_ANON_KEY.trim(),
       "Content-Type": "application/json",
     };
 
@@ -108,6 +130,8 @@ export async function createOrder(items, shippingAddress) {
     console.log("5. Response received:", {
       status: res.status,
       hasOrderId: !!res.data?.order_id,
+      hasRazorpayOrderId: !!res.data?.razorpay_order_id,
+      hasAmount: !!res.data?.amount,
       devMode: res.data?.dev_mode
     });
 
@@ -116,8 +140,17 @@ export async function createOrder(items, shippingAddress) {
     console.error("Create order error:", {
       message: error.message,
       status: error.response?.status,
+      statusText: error.response?.statusText,
       data: error.response?.data,
-      headers: error.response?.headers
+      headers: error.response?.headers,
+      request: error.config ? {
+        url: error.config.url,
+        method: error.config.method,
+        headers: {
+          hasAuth: !!error.config.headers?.Authorization,
+          hasApiKey: !!error.config.headers?.apikey
+        }
+      } : null
     });
     throw error;
   }
@@ -129,11 +162,16 @@ export async function verifyPayment(
   razorpaySignature
 ) {
   try {
+    console.log("Getting auth headers for payment verification...");
     const headers = await getAuthHeaders();
 
     const url = `${getFunctionsUrl()}/verify-payment`;
 
-    console.log("Verifying payment at:", url);
+    console.log("Verifying payment at:", url, {
+      razorpayOrderId,
+      hasPaymentId: !!razorpayPaymentId,
+      hasSignature: !!razorpaySignature
+    });
 
     const res = await axios.post(
       url,
@@ -145,9 +183,18 @@ export async function verifyPayment(
       { headers }
     );
 
+    console.log("Payment verification response:", {
+      status: res.status,
+      verified: res.data?.verified
+    });
+
     return res.data;
   } catch (error) {
-    console.error("Verify payment error:", error.response?.data || error.message);
+    console.error("Verify payment error:", {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    });
     throw error;
   }
 }
