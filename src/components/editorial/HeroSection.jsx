@@ -8,7 +8,7 @@ export default function HeroSection({
   ctaHref = "/shop",
 }) {
   return (
-    <section className="relative w-full min-h-[90vh] min-h-[380px] overflow-hidden">
+    <section className="relative w-full min-h-screen min-h-[380px] overflow-hidden">
       <img
         src={image || "/herobg.jpg"}
         alt=""

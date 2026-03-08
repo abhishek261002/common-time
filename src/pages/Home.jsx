@@ -37,8 +37,8 @@ export default function Home() {
       <SplitSection
         label="The Philosophy"
         headline="We believe in the beauty of the pause."
-        body="Common Time is made for the moments between – intentionally serving only bakes and coffee to create that gentle pause between your meals, and to quietly become part of your daily ritual. We imagine coffee for both purists and tourists. While we spend time perfecting the details, we don't believe in overwhelming you. The best coffee, after all, is the one you enjoy most."
-        image="/newshero.jpg"
+        body="Every space and every brew is crafted to honor the quiet transitions of your day. We remove the noise to let the essence of the moment emerge through light, texture, and taste."
+        image="/IMG_8475.JPG"
         imagePosition="right"
         linkText="Learn about our sourcing"
         linkHref="/about"
@@ -52,7 +52,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-16 md:py-24 relative">
+      {/* <section className="py-16 md:py-24 relative">
         <img
           src="/herobg.jpg"
           alt=""
@@ -72,7 +72,7 @@ export default function Home() {
             Shop Collection
           </Link>
         </div>
-      </section>
+      </section> */}
 
       <section className="py-16 md:py-24">
         <Container>

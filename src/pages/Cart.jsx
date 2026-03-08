@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { supabase } from "../services/supabase";
 import { formatPrice } from "../utils/formatters";
 import { useCart } from "../context/CartContext";
-import QuantitySelector from "../components/QuantitySelector";
 
 export default function Cart() {
   const { cart, updateQuantity, removeItem, getCartItems } = useCart();
@@ -33,7 +32,6 @@ export default function Cart() {
       setLoading(false);
     }
     fetchProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
   const cartRows = items
@@ -48,79 +46,159 @@ export default function Cart() {
     0
   );
 
+  // EMPTY STATE
   if (items.length === 0 && !loading) {
     return (
-      <main className="min-h-screen py-24 text-center">
-        <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
+      <main className="max-w-7xl mx-auto px-6 py-24 text-center min-h-[60vh] flex flex-col justify-center items-center">
+        <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-[#493627]/10 uppercase select-none">Empty</h2>
+        <div className="-mt-8 md:-mt-12 mb-10">
+          <span className="text-2xl font-light tracking-tight italic">Your cart is waiting</span>
+        </div>
         <Link
           to="/shop"
-          className="text-black underline hover:no-underline uppercase"
+          className="bg-[#493627] text-[#F9F7F2] px-10 py-4 text-xs font-bold uppercase tracking-[0.3em] rounded hover:opacity-90 transition-all"
         >
-          Continue Shopping
+          Explore Collection
         </Link>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen py-20 md:py-28 px-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-medium mb-12">Cart</h1>
-
-      {loading ? (
-        <div className="space-y-4">
-          {[1, 2].map((i) => (
-            <div key={i} className="h-24 bg-gray-100 animate-pulse rounded" />
-          ))}
+    <main className="max-w-7xl mx-auto px-6 py-16 md:py-24 font-display text-[#493627] antialiased">
+      {/* HEADER SECTION */}
+      <div className="mb-16">
+        <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-[#493627]/10 uppercase select-none">
+          Cart
+        </h2>
+        <div className="-mt-8 md:-mt-12">
+          <span className="text-2xl font-light tracking-tight italic">Your selection</span>
         </div>
-      ) : (
-        <div className="space-y-6">
-          {cartRows.map((row) => (
-            <div
-              key={row.product_id}
-              className="flex gap-6 md:gap-8 items-center border-b border-gray-100 pb-8"
-            >
-              <img
-                src={row.product.image_url || "/newshero.jpg"}
-                alt={row.product.name}
-                className="w-24 h-24 object-cover rounded"
-              />
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold truncate">{row.product.name}</h3>
-                <p className="text-gray-600">{formatPrice(row.product.price)}</p>
-              </div>
-              <QuantitySelector
-                value={row.quantity}
-                onChange={(q) => updateQuantity(row.product_id, q)}
-                min={1}
-                max={row.product.stock_quantity || 99}
-              />
-              <p className="font-semibold w-20 text-right">
-                {formatPrice(row.product.price * row.quantity)}
-              </p>
-              <button
-                onClick={() => removeItem(row.product_id)}
-                className="text-gray-500 hover:text-red-600 text-sm uppercase"
-              >
-                Remove
-              </button>
+      </div>
+
+      <div className="flex flex-col lg:flex-row gap-20">
+        {/* LEFT SIDE: ITEM LIST */}
+        <div className="flex-grow space-y-12">
+          {loading ? (
+            <div className="space-y-12">
+              {[1, 2].map((i) => (
+                <div key={i} className="flex gap-10 animate-pulse">
+                  <div className="w-32 h-40 bg-gray-200 rounded-lg" />
+                  <div className="flex-1 space-y-4 py-2">
+                    <div className="h-6 bg-gray-200 w-1/3" />
+                    <div className="h-4 bg-gray-200 w-1/4" />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+          ) : (
+            cartRows.map((row) => (
+              <div 
+                key={row.product_id} 
+                className="flex items-start justify-between pb-8 border-b border-[#493627]/5"
+              >
+                <div className="flex gap-6 md:gap-10">
+                  {/* PRODUCT IMAGE */}
+                  <div className="w-24 h-32 md:w-32 md:h-40 bg-[#493627]/5 rounded-lg overflow-hidden flex-shrink-0">
+                    <img 
+                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" 
+                      src={row.product.image_url || "/placeholder.jpg"} 
+                      alt={row.product.name}
+                    />
+                  </div>
 
-      {cartRows.length > 0 && (
-        <div className="mt-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-          <p className="text-xl font-medium">
-            Total: {formatPrice(total)}
-          </p>
-          <Link
-            to="/checkout"
-            className="bg-[#6B5344] text-white px-10 py-3 font-medium hover:bg-[#5a4538] transition uppercase tracking-wider text-sm"
-          >
-            Proceed to Checkout
-          </Link>
+                  {/* PRODUCT INFO */}
+                  <div className="flex flex-col justify-between py-1">
+                    <div>
+                      <h3 className="text-lg md:text-xl font-medium tracking-tight">
+                        {row.product.name}
+                      </h3>
+                      <p className="text-[#493627]/60 text-sm mt-1 uppercase tracking-widest">
+                        Specialty Grade / Selection
+                      </p>
+                    </div>
+
+                    {/* QUANTITY & REMOVE */}
+                    <div className="flex items-center gap-6 mt-6">
+                      <div className="flex items-center border border-[#493627]/10 rounded overflow-hidden">
+                        <button 
+                          onClick={() => updateQuantity(row.product_id, Math.max(1, row.quantity - 1))}
+                          className="px-3 py-1 hover:bg-[#493627]/5 transition-colors"
+                        >
+                          <span className="text-sm font-bold">−</span>
+                        </button>
+                        <span className="px-4 text-sm font-medium">{row.quantity}</span>
+                        <button 
+                          onClick={() => updateQuantity(row.product_id, Math.min(row.product.stock_quantity || 99, row.quantity + 1))}
+                          className="px-3 py-1 hover:bg-[#493627]/5 transition-colors"
+                        >
+                          <span className="text-sm font-bold">+</span>
+                        </button>
+                      </div>
+                      <button 
+                        onClick={() => removeItem(row.product_id)}
+                        className="text-xs uppercase tracking-widest text-[#493627]/40 hover:text-[#493627] transition-colors"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ITEM TOTAL */}
+                <div className="text-right py-1">
+                  <span className="text-lg font-medium">{formatPrice(row.product.price * row.quantity)}</span>
+                </div>
+              </div>
+            ))
+          )}
         </div>
-      )}
+
+        {/* RIGHT SIDE: SUMMARY BOX */}
+        <div className="w-full lg:w-96 shrink-0">
+          <div className="bg-[#493627]/5 p-8 rounded-lg">
+            <h3 className="text-sm font-bold uppercase tracking-[0.2em] mb-8">Order Summary</h3>
+            
+            <div className="space-y-4">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-[#493627]/60">Subtotal</span>
+                <span className="font-medium">{formatPrice(total)}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-[#493627]/60">Shipping</span>
+                <span className="italic text-xs">Calculated at next step</span>
+              </div>
+              
+              <div className="pt-6 mt-6 border-t border-[#493627]/10 flex justify-between items-end">
+                <span className="text-sm font-bold uppercase tracking-widest">Total</span>
+                <span className="text-2xl font-bold tracking-tighter text-[#493627]">
+                  {formatPrice(total)}
+                </span>
+              </div>
+            </div>
+
+            <Link
+              to="/checkout"
+              className="block w-full mt-10 bg-[#493627] text-[#F9F7F2] py-5 text-center text-xs font-bold uppercase tracking-[0.3em] rounded hover:opacity-90 transition-all"
+            >
+              Checkout
+            </Link>
+
+            <p className="mt-6 text-[10px] text-center text-[#493627]/40 uppercase tracking-widest leading-loose px-4">
+              Taxes and shipping fees will be applied during the final stage of your purchase.
+            </p>
+          </div>
+
+          <div className="mt-8 px-2">
+            <div className="flex items-center gap-3 text-[#493627]/60">
+              <span className="text-xs">🔒</span>
+              <span className="text-[10px] uppercase tracking-widest font-medium">
+                Secure encrypted checkout
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
