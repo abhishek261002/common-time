@@ -16,7 +16,14 @@ export default function Shop() {
   useEffect(() => {
     async function fetchProducts() {
       setLoading(true);
-      let query = supabase.from("products").select("*").eq("is_active", true);
+
+      let query = supabase
+        .from("products")
+        .select(`
+          *,
+          product_images (*)
+        `)
+        .eq("is_active", true);
 
       if (category !== "all") {
         query = query.eq("category", category);
@@ -28,19 +35,41 @@ export default function Shop() {
         console.error("Error fetching products:", error);
         setProducts([]);
       } else {
-        setProducts(data || []);
+
+        const formattedProducts = (data || []).map((product) => {
+
+          const sortedImages =
+            product.product_images?.sort(
+              (a, b) => a.position - b.position
+            ) || [];
+
+          return {
+            ...product,
+            image_url:
+              sortedImages[0]?.image_url ||
+              product.image_url ||
+              "/newshero.jpg",
+          };
+        });
+
+        setProducts(formattedProducts);
       }
+
       setLoading(false);
     }
+
     fetchProducts();
   }, [category]);
 
   return (
     <main className="bg-white min-h-screen py-16 px-4 md:px-8 text-black">
+
       <div className="max-w-6xl mx-auto">
+
         <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 uppercase tracking-tight">
           Shop
         </h1>
+
         <p className="text-center max-w-2xl mx-auto text-gray-600 mb-12">
           Designed for the moments between — coffee, apparel, and merchandise.
         </p>
@@ -62,6 +91,7 @@ export default function Shop() {
         </div>
 
         {loading ? (
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
               <div
@@ -70,18 +100,27 @@ export default function Shop() {
               />
             ))}
           </div>
+
         ) : products.length === 0 ? (
+
           <p className="text-center text-gray-500 py-16">
             No products found.
           </p>
+
         ) : (
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
             ))}
           </div>
+
         )}
       </div>
+
     </main>
   );
 }

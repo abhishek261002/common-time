@@ -15,8 +15,7 @@ export default function Home() {
       const { data } = await supabase
         .from("products")
         .select("*")
-        .eq("is_active", true)
-        .limit(6);
+        .eq("is_active", true);
       setProducts(data || []);
     }
     fetchProducts();
@@ -28,8 +27,8 @@ export default function Home() {
   return (
     <div className="bg-white">
       <HeroSection
-        headline="designed for the moments between"
-        subtext="A meticulous approach to every bean, roast, and pour. We find beauty in the precision of the process."
+        headline="Designed for the moments between"
+        subtext=""
         ctaText="Discover"
         ctaHref="/shop"
       />
@@ -38,7 +37,7 @@ export default function Home() {
         label="The Philosophy"
         headline="We believe in the beauty of the pause."
         body="Every space and every brew is crafted to honor the quiet transitions of your day. We remove the noise to let the essence of the moment emerge through light, texture, and taste."
-        image="/IMG_8475.JPG"
+        image="/IMG_4630.PNG"
         imagePosition="right"
         linkText="Learn about our sourcing"
         linkHref="/about"
@@ -52,28 +51,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* <section className="py-16 md:py-24 relative">
-        <img
-          src="/herobg.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative max-w-[1200px] mx-auto px-4 md:px-6 py-24 text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-white/90 mb-4">Objects for Living</p>
-          <h2 className="text-3xl md:text-4xl font-medium text-white mb-4">Curated Wear & Ware</h2>
-          <p className="text-white/90 max-w-xl mx-auto mb-8">
-            Timeless pieces for your daily ritual. From ceramic mugs to soft hoodies.
-          </p>
-          <Link
-            to="/shop?category=merchandise"
-            className="inline-block text-white text-sm uppercase tracking-wider border-b border-white/80 hover:border-white"
-          >
-            Shop Collection
-          </Link>
-        </div>
-      </section> */}
-
       <section className="py-16 md:py-24">
         <Container>
           <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">Curated Selection</p>
@@ -82,11 +59,95 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* Partner Logos Marquee */}
+      <PartnerLogos />
+
       <CitySection cities={["Kanpur", "Colombo", "Kathmandu"]} />
 
       <section className="py-12 text-center text-gray-500 text-sm">
         <p>a concept by bhatia hospitality group</p>
       </section>
     </div>
+  );
+}
+
+/* ---------- Partner Logos (Fixed Marquee) ---------- */
+function PartnerLogos() {
+  const brands = [
+    {
+      name: "LBB",
+      file: "/logos/lbb.jpg",
+      url: "https://www.instagram.com/p/DQeUg5qEgLo/?img_index=4&igsh=cHdjaDY1c2ZybDZx",
+    },
+    {
+      name: "Food Talk India",
+      file: "/logos/foodtalkindia.jpg",
+      url: "https://www.instagram.com/p/DQcDapsElc2/?img_index=4&igsh=MXcxN3M5aDIxMDB2bA==",
+    },
+    {
+      name: "ET Hospitality",
+      file: "/logos/ethospitality.svg",
+      url: "https://hospitality.economictimes.indiatimes.com/news/restaurants/common-time-debuts-in-lodhi-colony-new-delhi/125049847",
+    },
+    {
+      name: "Restaurant India",
+      file: "/logos/restaurantindia.png",
+      url: "https://www.restaurantindia.in/news/restaurant-india-news-common-time-debuts-in-lodhi-colony-at-new-delhi.n14295",
+    },
+    {
+      name: "StyleWire",
+      file: "/logos/thestylewire.png",
+      url: "https://thestylewire.in/2025/11/04/where-to-eat-stay-and-indulge-fresh-openings-across-india/",
+    },
+    {
+      name: "Restaurant India",
+      file: "/logos/restaurantindia.png",
+      url: "https://www.instagram.com/p/DQlgM5xjpAQ/",
+    },
+  ];
+
+  return (
+    <section className="bg-white" aria-label="Partner logos">
+      <div className="max-w-[1200px] mx-auto py-10 px-4 md:px-6 overflow-hidden">
+        <p className="mb-4 text-xs uppercase tracking-widest text-gray-400 text-center md:text-left">
+          Listen in to what others are saying
+        </p>
+
+        {/* Marquee container */}
+        <div className="relative w-full overflow-hidden">
+          <div className="flex animate-marquee hover:[animation-play-state:paused]">
+            {[...brands, ...brands].map((brand, i) => (
+              <a
+                key={i}
+                href={brand.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-36 sm:w-44 md:w-52 flex justify-center items-center px-6"
+              >
+                <img
+                  src={brand.file}
+                  alt={brand.name}
+                  className="max-h-10 sm:max-h-12 md:max-h-16 object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+                  loading="lazy"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Scoped animation styles */}
+        <style>{`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 25s linear infinite;
+          }
+        `}</style>
+      </div>
+    </section>
   );
 }

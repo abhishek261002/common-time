@@ -100,7 +100,7 @@ useEffect(() => {
       </h2>
 
       {/* Body Text Reveal (Starts after headline is mostly done) */}
-      <div className="text-2xl leading-relaxed">
+      <div className="text-base md:text-xl leading-relaxed">
         {bodyWords.map((word, i) => (
           <RevealWord 
             key={`b-${i}`} 
@@ -131,7 +131,7 @@ useEffect(() => {
       <img
         src={image}
         alt=""
-        className="h-full w-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+        className="h-full w-full object-cover  hover:grayscale-0 transition-all duration-700"
       />
     </div>
   );

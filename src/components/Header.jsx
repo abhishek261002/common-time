@@ -72,7 +72,7 @@ export default function Header() {
 
       {/* MOBILE TOGGLE */}
       <button 
-        className="lg:hidden text-[#1A1A1A] z-[60]"
+        className="lg:hidden text-[#1A1A1A] z-[60] mr-6" 
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -92,7 +92,11 @@ export default function Header() {
                 <Link to="/shop" className="dropdown-link">Order Online</Link>
               </div>
               <div className="w-1/2 flex justify-end">
-                <div className="w-full max-w-lg aspect-video bg-gray-200 grayscale hover:grayscale-0 transition-all duration-700 shadow-sm rounded-sm" />
+                <img 
+                  src="header-dropdown/IMG_6027.JPG" 
+                  alt="Shop"
+                  className="w-full max-w-lg aspect-video object-cover hover:grayscale-0 transition-all duration-700 shadow-sm rounded-sm" 
+                />
               </div>
             </div>
           </div>
@@ -110,7 +114,11 @@ export default function Header() {
                 <Link to="/locations" className="dropdown-link">Our Locations</Link>
               </div>
               <div className="w-1/2 flex justify-end">
-                <div className="w-full max-w-lg aspect-video bg-gray-200 grayscale hover:grayscale-0 transition-all duration-700 shadow-sm rounded-sm" />
+                <img 
+                  src="header-dropdown/IMG_5713.JPG" 
+                  alt="Locations"
+                  className="w-full max-w-lg aspect-video object-cover  hover:grayscale-0 transition-all duration-700 shadow-sm rounded-sm" 
+                />
               </div>
             </div>
           </div>
@@ -118,11 +126,21 @@ export default function Header() {
       </div>
 
       {/* CENTER: WORDMARK */}
-      <Link to="/" className="absolute left-1/2 -translate-x-1/2 text-center">
-        <div className="wordmark text-lg lg:text-xl text-[#1A1A1A]">
-          common time
-        </div>
-      </Link>
+      <Link to="/" className="flex items-center gap-2">
+          <img
+            src="/logo.jpg"
+            alt="Common Time Logo"
+            className="h-8 w-8 object-contain"
+          />
+          <div className="flex items-center gap-1 leading-[1.1]">
+            <span className="font-[Bai_Jamjuree] font-light text-gray-900 tracking-tight text-xl sm:text-2xl md:text-3xl lg:text-[32px]">
+              COMMON
+            </span>
+            <span className="font-[Garet_Book] font-black italic text-gray-900/90 tracking-tight text-xl sm:text-2xl md:text-3xl lg:text-[32px]">
+              TIME
+            </span>
+          </div>
+        </Link>
 
       {/* RIGHT: MENU & AUTH */}
       <div className="flex-1 flex items-center justify-end space-x-6 lg:space-x-10 h-full">
@@ -136,6 +154,13 @@ export default function Header() {
                 <Link to="/menu" className="dropdown-link">Cafe Menu</Link>
                 <Link to="/shop" className="dropdown-link">Order Online</Link>
               </div>
+              <div className="w-1/2 flex justify-end">
+                <img 
+                  src="header-dropdown/IMG_5589.JPG" 
+                  alt="Menu"
+                  className="w-full max-w-lg aspect-video object-cover  transition-all duration-700 shadow-sm rounded-sm" 
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -144,7 +169,6 @@ export default function Header() {
         <div className="hidden lg:flex items-center space-x-6">
           {user ? (
             <>
-              <Link to="/profile" className="nav-link text-xs uppercase text-[#1A1A1A]">PROFILE</Link>
               <Link to="/orders" className="nav-link text-xs uppercase text-[#1A1A1A]">ORDERS</Link>
               <button onClick={() => signOut()} className="nav-link text-xs uppercase text-[#1A1A1A]">LOGOUT</button>
             </>
