@@ -18,14 +18,15 @@ export default function ProductGrid({ products, columns = 3 }) {
 
   if (!products?.length) return null;
 
-  const gridCols = columns === 2 ? "lg:grid-cols-2" : "lg:grid-cols-3";
+  // Updated logic to handle 4 columns
+  const gridCols = 
+    columns === 4 ? "lg:grid-cols-4" : 
+    columns === 2 ? "lg:grid-cols-2" : 
+    "lg:grid-cols-3";
 
   return (
     <>
-      {/* Embedded 3D Flip Styles 
-        Tailwind doesn't support preserve-3d natively without plugins, 
-        so we include it here for a "single-file" solution.
-      */}
+      {/* Embedded 3D Flip Styles */}
       <style>{`
         .perspective-1000 {
           perspective: 1000px;
@@ -60,21 +61,18 @@ export default function ProductGrid({ products, columns = 3 }) {
           return (
             <div 
               key={product.id} 
-              /* Reduced height to approx 0.75x (550px -> 412px) */
-              className="group perspective-1000 h-[412px] w-full"
+              /* Height adjusted to 380px for better 4-column proportions */
+              className="group perspective-1000 h-[380px] w-full"
             >
               <div className="flip-card-inner">
                 
                 {/* FRONT SIDE: Minimalist Image View */}
-                {/* REMOVED: grayscale group-hover:grayscale-0 */}
                 <div className="flip-card-front bg-gray-100 overflow-hidden">
                   <img
                     src={product.image_url || "/newshero.jpg"}
                     alt={product.name}
-                    /* Image is now full color by default */
                     className="w-full h-full object-cover"
                   />
-                  {/* Subtle label on front (optional) */}
                   <div className="absolute bottom-3 left-3">
                     <p className="text-[9px] uppercase tracking-[0.2em] text-white bg-black/20 backdrop-blur-sm px-2 py-0.5">
                       {product.name}
@@ -83,45 +81,36 @@ export default function ProductGrid({ products, columns = 3 }) {
                 </div>
 
                 {/* BACK SIDE: Interactive Details */}
-                {/* Reduced padding (p-10 -> p-7) */}
-                <div className="flip-card-back bg-[#F9F7F2] p-7 flex flex-col justify-center items-start border border-gray-100 shadow-2xl">
-                  {/* Scaled down typography and margins */}
-                  <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-3">
+                <div className="flip-card-back bg-[#F9F7F2] p-6 flex flex-col justify-center items-start border border-gray-100 shadow-2xl">
+                  <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-2">
                     Curated Essential
                   </span>
                   
-                  {/* Reduced font size (text-3xl -> text-2xl) */}
-                  <h3 className="text-2xl font-light text-gray-900 mb-1.5 uppercase tracking-tight leading-tight">
+                  <h3 className="text-xl font-light text-gray-900 mb-1.5 uppercase tracking-tight leading-tight">
                     {product.name}
                   </h3>
                   
-                  {/* Reduced font size and description limit */}
-                  <p className="text-xs text-gray-600 mb-4 leading-relaxed font-light">
-                    {product.description?.slice(0, 110)}
-                    {product.description?.length > 110 ? "…" : ""}
+                  <p className="text-[11px] text-gray-600 mb-3 leading-relaxed font-light">
+                    {product.description?.slice(0, 90)}
+                    {product.description?.length > 90 ? "…" : ""}
                   </p>
 
-                  {/* Reduced font size (text-2xl -> text-xl) and margin */}
-                  <p className="text-xl font-medium text-gray-900 mb-7">
+                  <p className="text-lg font-medium text-gray-900 mb-6">
                     {formatPrice(product.price)}
                   </p>
 
-                  {/* Reduced gap and margin */}
-                  <div className="flex flex-col gap-4 w-full mt-auto">
-                    {/* Primary Action: Add to Cart */}
-                    {/* Reduced padding (py-4 -> py-3) */}
+                  <div className="flex flex-col gap-3 w-full mt-auto">
                     <button
                       onClick={(e) => {
                         e.preventDefault();
                         addItem(product.id, 1);
                         toast.success(`${product.name} added to cart`);
                       }}
-                      className="w-full py-3 bg-[#493627] text-white text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-colors duration-300"
+                      className="w-full py-2.5 bg-[#493627] text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-colors duration-300"
                     >
                       Add to Cart
                     </button>
 
-                    {/* Secondary Action: View Product Page */}
                     <Link
                       to={`/shop/${slug}`}
                       className="text-center text-[9px] font-bold uppercase tracking-widest text-gray-500 border-b border-transparent hover:border-gray-400 pb-0.5 transition-all"

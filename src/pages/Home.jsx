@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../services/supabase";
 import HeroSection from "../components/editorial/HeroSection";
-import SplitSection from "../components/editorial/SplitSection";
+import CenteredRevealSection from "../components/editorial/SplitSection";
 import CitySection from "../components/editorial/CitySection";
 import ProductGrid from "../components/commerce/ProductGrid";
 import Container from "../components/layout/Container";
@@ -21,8 +21,8 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  const featuredCoffee = products.filter((p) => p.category === "coffee").slice(0, 3);
-  const featuredObjects = products.filter((p) => p.category === "merchandise").slice(0, 3);
+  const featuredCoffee = products.filter((p) => p.category === "coffee").slice(0, 4);
+  const featuredObjects = products.filter((p) => p.category === "merchandise").slice(0, 4);
 
   return (
     <div className="bg-white">
@@ -33,21 +33,19 @@ export default function Home() {
         ctaHref="/shop"
       />
 
-      <SplitSection
-        label="The Philosophy"
-        headline="We believe in the beauty of the pause."
-        body="Every space and every brew is crafted to honor the quiet transitions of your day. We remove the noise to let the essence of the moment emerge through light, texture, and taste."
-        image="/IMG_4630.PNG"
-        imagePosition="right"
-        linkText="Learn about our sourcing"
-        linkHref="/about"
-      />
+     <CenteredRevealSection
+  // Combine your previous headline and body into one string for a seamless reveal
+  headline="Pourers of the world’s best coffees and providers of the tools and techniques that make it yours.
+"
+  linkText="Visit Us"
+  linkHref="/locations"
+/>
 
       <section className="py-16 md:py-24 bg-[#fafaf8]">
         <Container>
           <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">Curated Selection</p>
           <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-10">Coffee Highlights</h2>
-          <ProductGrid products={featuredCoffee} columns={3} />
+          <ProductGrid products={featuredCoffee} columns={4} />
         </Container>
       </section>
 
@@ -55,14 +53,14 @@ export default function Home() {
         <Container>
           <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">Curated Selection</p>
           <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-10">Objects & Equipment</h2>
-          <ProductGrid products={featuredObjects} columns={3} />
+          <ProductGrid products={featuredObjects} columns={4} />
         </Container>
       </section>
 
       {/* Partner Logos Marquee */}
       <PartnerLogos />
 
-      <CitySection cities={["Kanpur", "Colombo", "Kathmandu"]} />
+      <CitySection cities={["Vasant-Vihar", "Lodhi-Colony", "Khan-Market"]} />
 
       <section className="py-12 text-center text-gray-500 text-sm">
         <p>a concept by bhatia hospitality group</p>

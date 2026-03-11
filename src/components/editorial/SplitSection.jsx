@@ -1,28 +1,30 @@
-import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 /**
  * RevealWord handles the individual word "filling" effect.
- * It calculates its own progress based on the overall section progress.
  */
 const RevealWord = ({ children, progress, index, totalWords }) => {
-  // We offset each word's start/end so they reveal in a sequence (first line, then second)
+  // Calculate the window of progress for this specific word
   const start = index / totalWords;
   const end = (index + 1) / totalWords;
   
-  // Local progress for this specific word
+  // Local progress for this specific word (0 to 1)
   const wordProgress = Math.min(Math.max((progress - start) / (end - start), 0), 1);
 
   return (
-    <span className="relative inline-block mr-[0.25em] whitespace-nowrap">
-      {/* Background layer: The 'Grey' state */}
-      <span className="text-gray-300 transition-colors duration-300">
+    <span className="relative inline-block mr-[0.3em] whitespace-nowrap">
+      {/* Background layer: The 'Muted' state (White with low opacity) */}
+      <span className="text-white/20">
         {children}
       </span>
-      {/* Foreground layer: The 'Black' state that reveals horizontally */}
+      {/* Foreground layer: The 'Active' state that reveals horizontally */}
       <span 
-        className="absolute top-0 left-0 text-black overflow-hidden"
-        style={{ width: `${wordProgress * 100}%`, transition: 'width 0.1s linear' }}
+        className="absolute top-0 left-0 text-[#fcf7e6] overflow-hidden"
+        style={{ 
+            width: `${wordProgress * 100}%`, 
+            transition: 'width 0.1s linear' // Keeps the "fill" smooth
+        }}
       >
         {children}
       </span>
@@ -30,125 +32,73 @@ const RevealWord = ({ children, progress, index, totalWords }) => {
   );
 };
 
-export default function SplitSection({
-  label,
-  headline,
-  body,
-  image,
-  imagePosition = "right",
+export default function CenteredRevealSection({
+  headline = "WatchHouse is a slow take on instant gratification. Thoughtful pours, rare flavour profiles and paraphernalia for your daily cup.",
   linkText,
   linkHref,
 }) {
   const containerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-useEffect(() => {
-  const handleScroll = () => {
-    if (!containerRef.current) return;
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
 
-    // Start animation when element center reaches lower-middle of screen
-    const triggerPoint = viewportHeight * 1;
+      // Start animation when the section enters the viewport
+      // and finish when it's near the top
+      const triggerPoint = viewportHeight; 
+      const elementTop = rect.top;
+      const totalHeight = rect.height + viewportHeight;
 
-    const elementCenter = rect.top + rect.height / 2;
+      const progress = Math.min(
+        Math.max((triggerPoint - elementTop) / (viewportHeight * 1.5), 0),
+        1
+      );
 
-    const distanceFromTrigger = triggerPoint - elementCenter;
+      setScrollProgress(progress);
+    };
 
-    // How long the animation lasts
-    const animationDistance = viewportHeight * 0.8;
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
-    const progress = Math.min(
-      Math.max(distanceFromTrigger / animationDistance, 0),
-      1
-    );
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    setScrollProgress(progress);
-  };
-
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  handleScroll();
-
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
-
-  // Split text into words for the sequential reveal
-  const headlineWords = headline ? headline.split(" ") : [];
-  const bodyWords = body ? body.split(" ") : [];
-
-  const textBlock = (
-    <div className="flex flex-col gap-8">
-      {label && (
-        <span className="text-sm font-bold uppercase tracking-[0.3em] text-[#493627]/60">
-          {label}
-        </span>
-      )}
-
-      {/* Headline Reveal */}
-      <h2 className="text-4xl font-bold leading-tight md:text-5xl tracking-tight">
-        {headlineWords.map((word, i) => (
-          <RevealWord 
-            key={`h-${i}`} 
-            index={i} 
-            totalWords={headlineWords.length} 
-            progress={scrollProgress}
-          >
-            {word}
-          </RevealWord>
-        ))}
-      </h2>
-
-      {/* Body Text Reveal (Starts after headline is mostly done) */}
-      <div className="text-base md:text-xl leading-relaxed">
-        {bodyWords.map((word, i) => (
-          <RevealWord 
-            key={`b-${i}`} 
-            index={i + headlineWords.length} // Offset so body starts after headline
-            totalWords={headlineWords.length + bodyWords.length} 
-            progress={scrollProgress}
-          >
-            {word}
-          </RevealWord>
-        ))}
-      </div>
-
-      <div className="h-px w-24 bg-[#493627]/30"></div>
-
-      {linkText && linkHref && (
-        <Link
-          to={linkHref}
-          className="inline-block w-fit text-sm font-bold uppercase tracking-widest text-[#493627] border-b-2 border-[#493627] pb-1 transition-all hover:opacity-70"
-        >
-          {linkText}
-        </Link>
-      )}
-    </div>
-  );
-
-  const imageBlock = image && (
-    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl shadow-2xl">
-      <img
-        src={image}
-        alt=""
-        className="h-full w-full object-cover  hover:grayscale-0 transition-all duration-700"
-      />
-    </div>
-  );
+  const allWords = headline.split(" ");
 
   return (
-    <section ref={containerRef} className="mx-auto max-w-7xl px-6 py-24 md:py-32 bg-white">
-      <div className="grid grid-cols-1 gap-16 md:grid-cols-2 items-center">
-        {imagePosition === "left" ? (
-          <>
-            <div className="order-1">{imageBlock}</div>
-            <div className="order-2">{textBlock}</div>
-          </>
-        ) : (
-          <>
-            <div className="order-2 md:order-1">{textBlock}</div>
-            <div className="order-1 md:order-2">{imageBlock}</div>
-          </>
+    <section 
+      ref={containerRef} 
+      className="relative min-h-screen flex flex-col items-center justify-center bg-stone-900 px-6 py-32"
+    >
+      <div className="max-w-5xl mx-auto text-center">
+        {/* Large Centered Reveal Text */}
+        <h2 className="text-5xl md:text-5xl lg:text-6xl font-serif leading-[1.3] md:leading-[1.4] tracking-tight">
+          {allWords.map((word, i) => (
+            <RevealWord 
+              key={i} 
+              index={i} 
+              totalWords={allWords.length} 
+              progress={scrollProgress}
+            >
+              {word}
+            </RevealWord>
+          ))}
+        </h2>
+
+        {/* Call to Action */}
+        {linkText && linkHref && (
+          <div className="mt-16">
+            <Link
+              to={linkHref}
+              className="inline-block px-8 py-3 border border-[#fcf7e6] text-[#fcf7e6] text-xs font-bold uppercase tracking-[0.2em] transition-all hover:bg-[#fcf7e6] hover:text-stone-900"
+            >
+              {linkText}
+            </Link>
+          </div>
         )}
       </div>
     </section>

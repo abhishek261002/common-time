@@ -5,7 +5,7 @@ export default function CitySection({ cities }) {
     <section className="py-20 md:py-28 bg-[#fafaf8]">
       <div className="max-w-[1200px] mx-auto px-4 md:px-6">
         <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-8">
-          Global Presence
+          Find us
         </p>
         <div className="flex flex-col gap-4">
           {cities.map((city) => (
