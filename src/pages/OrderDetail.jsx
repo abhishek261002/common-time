@@ -79,19 +79,19 @@ export default function OrderDetail() {
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-6 py-20 font-display text-slate-900 antialiased">
+    <main className="max-w-4xl mx-auto px-6 py-20 font-display text-slate-900 antialiased font-[Bai_Jamjuree] ">
       <style>{`
         .tracking-widest-extra { letter-spacing: 0.15em; }
       `}</style>
 
       {/* Header */}
       <div className="mb-16">
-        <h1 className="font-serif text-5xl md:text-6xl font-bold mb-8 uppercase tracking-tight">
+        <h1 className="font-[Bai_Jamjuree] text-5xl md:text-6xl font-bold mb-8 uppercase tracking-tight ">
           Order Details
         </h1>
         
         {/* Metadata Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-y border-[#493627]/10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-y border-[#493627]/10 font-[Garet_Book]">
           <div>
             <p className="text-[10px] uppercase tracking-widest-extra text-[#493627]/60 mb-1">Order Number</p>
             <p className="text-sm font-medium uppercase">#{order.id.slice(0, 8)}</p>

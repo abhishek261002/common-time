@@ -53,10 +53,10 @@ export default function Profile() {
   });
 
   return (
-    <main className="min-h-screen py-20 md:py-28 px-4 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-medium mb-10 uppercase">My Profile</h1>
+    <main className="min-h-screen py-20 md:py-28 px-4 max-w-2xl mx-auto ">
+      <h1 className="text-2xl font-medium mb-10 uppercase font-[Bai_Jamjuree] ">My Profile</h1>
 
-      <div className="space-y-6">
+      <div className="space-y-6  font-[Garet_Book]">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Full Name
@@ -87,7 +87,7 @@ export default function Profile() {
 
         <button
           onClick={handleLogout}
-          className="w-full bg-black text-white py-3 rounded-full font-medium hover:bg-gray-800 transition uppercase"
+          className="w-full bg-black text-white py-3 rounded-full font-medium hover:bg-gray-800 transition uppercase font-[Bai_Jamjuree] "
         >
           Logout
         </button>

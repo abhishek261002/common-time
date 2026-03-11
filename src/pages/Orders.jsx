@@ -61,8 +61,8 @@ export default function Orders() {
   if (authLoading || !user) return null;
 
   return (
-    <main className="min-h-screen py-16 px-4 max-w-4xl mx-auto font-display">
-      <h1 className="text-2xl font-bold mb-8 uppercase tracking-tight">Orders</h1>
+    <main className="min-h-screen py-16 px-4 max-w-4xl mx-auto font-display font-[Bai_Jamjuree]">
+      <h1 className="text-2xl font-bold mb-8 uppercase tracking-tight font-[Bai_Jamjuree]">Orders</h1>
       {loading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
@@ -70,9 +70,9 @@ export default function Orders() {
           ))}
         </div>
       ) : orders.length === 0 ? (
-        <p className="text-gray-600">No orders yet.</p>
+        <p className="text-gray-600 font-[Garet_Book]">No orders yet.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 ">
           {orders.map((order) => (
             <div
               key={order.id}
@@ -101,7 +101,7 @@ export default function Orders() {
                 <span className="font-semibold text-[#493627]">
                   {formatPrice(order.total_amount)}
                 </span>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-500 ">
                   {new Date(order.created_at).toLocaleDateString()}
                 </span>
                 <span className="text-gray-400">

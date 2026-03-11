@@ -43,16 +43,16 @@ export default function Home() {
 
       <section className="py-16 md:py-24 bg-[#fafaf8]">
         <Container>
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">Curated Selection</p>
-          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-10">Coffee Highlights</h2>
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2 font-[Garet_Book]">Curated Selection</p>
+          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-10 font-[Bai_Jamjuree] ">Coffee Highlights</h2>
           <ProductGrid products={featuredCoffee} columns={4} />
         </Container>
       </section>
 
       <section className="py-16 md:py-24">
         <Container>
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">Curated Selection</p>
-          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-10">Objects & Equipment</h2>
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2 font-[Garet_Book]">Curated Selection</p>
+          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-10 font-[Bai_Jamjuree] ">Objects & Equipment</h2>
           <ProductGrid products={featuredObjects} columns={4} />
         </Container>
       </section>
@@ -62,9 +62,14 @@ export default function Home() {
 
       <CitySection cities={["Vasant-Vihar", "Lodhi-Colony", "Khan-Market"]} />
 
-      <section className="py-12 text-center text-gray-500 text-sm">
-        <p>a concept by bhatia hospitality group</p>
-      </section>
+     <section className="py-20 flex flex-col items-center justify-center font-[Garet_Book]">
+  {/* A very thin, short divider */}
+  <div className="w-12 h-px bg-gray-200 mb-8" />
+  
+  <p className="text-sm text-gray-400 uppercase tracking-[0.3em] font-medium">
+    A concept by <span className="text-gray-900">Bhatia Hospitality Group</span>
+  </p>
+</section>
     </div>
   );
 }
@@ -107,7 +112,7 @@ function PartnerLogos() {
   return (
     <section className="bg-white" aria-label="Partner logos">
       <div className="max-w-[1200px] mx-auto py-10 px-4 md:px-6 overflow-hidden">
-        <p className="mb-4 text-xs uppercase tracking-widest text-gray-400 text-center md:text-left">
+        <p className="mb-4 text-xs uppercase tracking-widest text-gray-400 text-center md:text-left font-[Bai_Jamjuree]">
           Listen in to what others are saying
         </p>
 

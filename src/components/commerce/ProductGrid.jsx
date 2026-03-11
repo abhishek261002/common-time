@@ -74,7 +74,7 @@ export default function ProductGrid({ products, columns = 3 }) {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute bottom-3 left-3">
-                    <p className="text-[9px] uppercase tracking-[0.2em] text-white bg-black/20 backdrop-blur-sm px-2 py-0.5">
+                    <p className="text-[9px] uppercase tracking-[0.2em] text-white bg-black/20 backdrop-blur-sm px-2 py-0.5 font-[Bai_Jamjuree]">
                       {product.name}
                     </p>
                   </div>
@@ -82,20 +82,20 @@ export default function ProductGrid({ products, columns = 3 }) {
 
                 {/* BACK SIDE: Interactive Details */}
                 <div className="flip-card-back bg-[#F9F7F2] p-6 flex flex-col justify-center items-start border border-gray-100 shadow-2xl">
-                  <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-2">
+                  {/* <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-2 font-[Garet_Book]">
                     Curated Essential
-                  </span>
+                  </span> */}
                   
-                  <h3 className="text-xl font-light text-gray-900 mb-1.5 uppercase tracking-tight leading-tight">
+                  <h3 className="text-xl font-light text-gray-900 mb-1.5 uppercase tracking-tight leading-tight font-[Bai_Jamjuree]">
                     {product.name}
                   </h3>
                   
-                  <p className="text-[11px] text-gray-600 mb-3 leading-relaxed font-light">
+                  <p className="text-[11px] text-gray-600 mb-3 leading-relaxed font-light font-[Garet_Book]">
                     {product.description?.slice(0, 90)}
                     {product.description?.length > 90 ? "…" : ""}
                   </p>
 
-                  <p className="text-lg font-medium text-gray-900 mb-6">
+                  <p className="text-lg font-medium text-gray-900 mb-6 font-[Bai_Jamjuree]">
                     {formatPrice(product.price)}
                   </p>
 
@@ -106,14 +106,14 @@ export default function ProductGrid({ products, columns = 3 }) {
                         addItem(product.id, 1);
                         toast.success(`${product.name} added to cart`);
                       }}
-                      className="w-full py-2.5 bg-[#493627] text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-colors duration-300"
+                      className="w-full py-2.5 bg-[#493627] text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-colors duration-300 font-[Garet_Book]"
                     >
                       Add to Cart
                     </button>
 
                     <Link
                       to={`/shop/${slug}`}
-                      className="text-center text-[9px] font-bold uppercase tracking-widest text-gray-500 border-b border-transparent hover:border-gray-400 pb-0.5 transition-all"
+                      className="text-center text-[9px] font-bold uppercase tracking-widest text-gray-500 border-b border-transparent hover:border-gray-400 pb-0.5 transition-all font-[Garet_Book]"
                     >
                       View Full Details
                     </Link>

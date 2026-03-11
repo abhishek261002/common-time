@@ -11,10 +11,10 @@ export default function Header() {
   // --- STITCH DESIGN TOKENS ---
   const headerStyles = "bg-[#d9d9d9] border-t-4 border-[#333333] shadow-sm";
   const navBlockStyles = "bg-white/40 px-6 py-2 flex items-center space-x-8 relative"; 
-  const stitchNavLink = "text-[0.95rem] tracking-[0.05em] font-normal text-black uppercase hover:opacity-70 transition-opacity";
+  const stitchNavLink = "text-[0.95rem] tracking-[0.05em]  font-[Garet_Book] text-black uppercase hover:opacity-70 transition-opacity";
 
   return (
-    <header className={`relative z-50 ${headerStyles} h-[80px] lg:h-24 w-full flex items-center justify-between px-6 lg:px-16`}>
+    <header className={`relative z-50 ${headerStyles}  h-[80px] lg:h-24 w-full flex items-center justify-between px-6 lg:px-16`}>
       <style>{`
         .nav-link-custom { position: relative; }
         .nav-link-custom::after {
@@ -67,11 +67,11 @@ export default function Header() {
         <nav className={navBlockStyles}>
           {/* SHOP */}
           <div className="group h-full flex items-center">
-            <Link to="/shop" className={`${stitchNavLink} nav-link-custom`}>SHOP</Link>
+            <Link to="/shop" className={`${stitchNavLink} nav-link-custom font-[Garet_Book]`}>SHOP</Link>
             <div className="dropdown-panel absolute top-full left-0 mt-0 w-[550px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
-              <div className="flex flex-col space-y-4">
-                <Link to="/shop" className="dropdown-link">Coffee</Link>
-                <Link to="/shop" className="dropdown-link">Merchandise</Link>
+              <div className="flex flex-col space-y-4 font-[Garet_Book]">
+                <Link to="/orders" className="dropdown-link">My Orders</Link>
+                <Link to="/profile" className="dropdown-link">Profile</Link>
                 <Link to="/shop" className="dropdown-link">Order Online</Link>
               </div>
               <div className="w-32 h-44 overflow-hidden">
@@ -84,9 +84,8 @@ export default function Header() {
           <div className="group h-full flex items-center">
             <Link to="/locations" className={`${stitchNavLink} nav-link-custom`}>LOCATIONS</Link>
             <div className="dropdown-panel absolute top-full left-0 mt-0 w-[550px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4 font-[Garet_Book]">
                 <Link to="/about" className="dropdown-link">About</Link>
-                <Link to="/contact" className="dropdown-link">Inquiry</Link>
                 <Link to="/locations" className="dropdown-link">Our Locations</Link>
               </div>
               <div className="w-32 h-44 overflow-hidden">
@@ -111,11 +110,18 @@ export default function Header() {
         {/* Desktop Menu/Auth (Hidden on mobile) */}
         <nav className={`hidden lg:flex ${navBlockStyles} mr-6`}>
           <div className="group h-full flex items-center">
-            <Link to="/menu" className={`${stitchNavLink} nav-link-custom`}>MENU</Link>
+            <Link to="/" className={`${stitchNavLink} nav-link-custom`}>
+            <button
+            onClick={() => window.open("/menu.pdf", "_blank")}
+            className="px-4 h-9 sm:h-10 flex items-center justify-center text-gray-900 text-sm sm:text-base border border-gray-200 rounded-full hover:bg-gray-100 transition-colors"
+            title="View Menu"
+          >
+            Menu
+          </button> </Link>
             <div className="dropdown-panel absolute top-full right-0 mt-0 w-[500px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4 font-[Garet_Book]">
                 <Link to="/menu" className="dropdown-link text-3xl">Cafe Menu</Link>
-                <Link to="/shop" className="dropdown-link text-3xl">Order Online</Link>
+                <Link to="/shop" className="dropdown-link text-3xl">Order</Link>
               </div>
               <div className="w-32 h-44 overflow-hidden">
                 <img src="header-dropdown/IMG_5589.JPG" alt="Menu" className="w-full h-full object-cover" />

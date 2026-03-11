@@ -19,7 +19,7 @@ export default function Locations() {
       description: "A sleek neighborhood retreat in Basant Lok, serving artisan brews and refined bakes to a creative community.",
       address: "Coming Soon",
       hours: "Mon–Sun: 8:00 AM – 10:00 PM",
-      imageUrl: "/khan-market.jpg",
+      imageUrl: "/locations/huma-kabakci-oRk4Ep65tRc-unsplash.jpg",
     },
   ];
 
@@ -29,7 +29,7 @@ export default function Locations() {
         <section key={index} className="flex flex-col mb-20 md:mb-32">
           
           {/* 1. Full-Width Image: 65% of screen height */}
-          <div className="w-full h-[75vh] overflow-hidden bg-gray-100">
+          <div className="w-full lg:h-[95vh] h-65 overflow-hidden bg-gray-100">
             <img 
               src={loc.imageUrl} 
               alt={loc.city} 

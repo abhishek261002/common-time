@@ -1,54 +1,46 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-
-  const handleNewsletterSubmit = (e) => {
-    e.preventDefault();
-    // Placeholder - no backend
-    setEmail("");
-  };
-
   return (
-    <footer className="bg-[#fafaf8] py-10 md:py-14 text-gray-900 text-sm border-t border-gray-100">
-      <div className="max-w-4xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link to="/terms" className="hover:underline text-gray-600">
-            Terms & Conditions
-          </Link>
-          <Link to="/shop" className="hover:underline text-gray-600">
-            Shop
-          </Link>
-          <Link to="/locations" className="hover:underline text-gray-600">
-            Locations
-          </Link>
-          <Link to="/about" className="hover:underline text-gray-600">
-            About
-          </Link>
+    <footer className="bg-[#fafaf8] border-t border-gray-200 font-[Bai_Jamjuree] py-12">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Row 1: Brand & Nav */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 pb-4 border-b border-gray-200">
+          <div className="flex items-center gap-3">
+            <h2 className="text-[18px] font-bold tracking-[0.2em] uppercase text-black">
+              Common Time
+            </h2>
+            <span className="text-xs text-gray-400 uppercase tracking-widest hidden md:block">
+              / New Delhi
+            </span>
+          </div>
+          
+          <nav className="flex gap-x-8">
+            {['shop', 'locations', 'about', 'terms'].map((item) => (
+              <Link 
+                key={item}
+                to={`/${item}`} 
+                className="text-[18px] font-medium uppercase tracking-tight text-black transition-all duration-300 hover:opacity-60 hover:scale-105"
+              >
+                {item}
+              </Link>
+            ))}
+          </nav>
         </div>
-        <form
-          onSubmit={handleNewsletterSubmit}
-          className="flex gap-2"
-        >
-          <input
-            type="email"
-            placeholder="Newsletter (placeholder)"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="px-3 py-2 border border-gray-200 rounded text-sm"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-gray-100 rounded text-sm hover:bg-gray-200"
-          >
-            Subscribe
-          </button>
-        </form>
+
+        {/* Row 2: Credit & Copyright */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-2 mt-4">
+          <p className="text-sm font-medium text-black uppercase tracking-wide">
+            by <span className="font-bold">Bhatia Hospitality Group</span>
+          </p>
+          
+          <p className="text-xs text-gray-500 uppercase tracking-wider">
+            © {new Date().getFullYear()} • All Rights Reserved
+          </p>
+        </div>
+
       </div>
-      <p className="text-center mt-6 text-gray-500">
-        © {new Date().getFullYear()} Common Time • All rights reserved
-      </p>
     </footer>
   );
 }
