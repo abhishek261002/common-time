@@ -72,11 +72,11 @@ export default function CenteredRevealSection({
   return (
     <section 
       ref={containerRef} 
-      className="relative min-h-screen flex flex-col items-center justify-center bg-stone-900 px-6 py-32"
+      className="relative min-h-50vh flex flex-col items-center justify-center bg-stone-900 px-6 lg:py-32 py-20"
     >
       <div className="max-w-5xl mx-auto text-center">
         {/* Large Centered Reveal Text */}
-        <h2 className="text-5xl md:text-5xl lg:text-6xl font-[Bai_Jamjuree] leading-[1.3] md:leading-[1.4] tracking-tight">
+        <h2 className="text-5xl md:text-5xl lg:text-5xl font-[Bai_Jamjuree] leading-[1.3] md:leading-[1.4] tracking-tight">
           {allWords.map((word, i) => (
             <RevealWord 
               key={i} 

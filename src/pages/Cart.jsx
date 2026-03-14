@@ -67,7 +67,7 @@ export default function Cart() {
   return (
     <main className="max-w-7xl mx-auto px-6 py-16 md:py-24 font-display text-[#493627] antialiased">
       {/* HEADER SECTION */}
-      <div className="mb-16">
+      <div className="mb-16 font-[Bai_Jamjuree]">
         <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-[#493627]/10 uppercase select-none">
           Cart
         </h2>
@@ -101,7 +101,7 @@ export default function Cart() {
                   {/* PRODUCT IMAGE */}
                   <div className="w-24 h-32 md:w-32 md:h-40 bg-[#493627]/5 rounded-lg overflow-hidden flex-shrink-0">
                     <img 
-                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" 
+                      className="w-full h-full object-cover hover:grayscale-0 transition-all duration-500" 
                       src={row.product.image_url || "/placeholder.jpg"} 
                       alt={row.product.name}
                     />
@@ -110,16 +110,16 @@ export default function Cart() {
                   {/* PRODUCT INFO */}
                   <div className="flex flex-col justify-between py-1">
                     <div>
-                      <h3 className="text-lg md:text-xl font-medium tracking-tight">
+                      <h3 className="text-lg md:text-xl font-medium tracking-tight font-[Bai_Jamjuree]">
                         {row.product.name}
                       </h3>
-                      <p className="text-[#493627]/60 text-sm mt-1 uppercase tracking-widest">
+                      <p className="text-[#493627]/60 text-sm mt-1 uppercase tracking-widest  font-[Garet_Book]">
                         Specialty Grade / Selection
                       </p>
                     </div>
 
                     {/* QUANTITY & REMOVE */}
-                    <div className="flex items-center gap-6 mt-6">
+                    <div className="flex items-center gap-6 mt-6 font-[Bai_Jamjuree]">
                       <div className="flex items-center border border-[#493627]/10 rounded overflow-hidden">
                         <button 
                           onClick={() => updateQuantity(row.product_id, Math.max(1, row.quantity - 1))}
@@ -146,7 +146,7 @@ export default function Cart() {
                 </div>
 
                 {/* ITEM TOTAL */}
-                <div className="text-right py-1">
+                <div className="text-right py-1 font-[Bai_Jamjuree]">
                   <span className="text-lg font-medium">{formatPrice(row.product.price * row.quantity)}</span>
                 </div>
               </div>
@@ -157,19 +157,19 @@ export default function Cart() {
         {/* RIGHT SIDE: SUMMARY BOX */}
         <div className="w-full lg:w-96 shrink-0">
           <div className="bg-[#493627]/5 p-8 rounded-lg">
-            <h3 className="text-sm font-bold uppercase tracking-[0.2em] mb-8">Order Summary</h3>
+            <h3 className="text-sm font-bold uppercase tracking-[0.2em] mb-8 font-[Bai_Jamjuree]">Order Summary</h3>
             
             <div className="space-y-4">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-[#493627]/60">Subtotal</span>
+                <span className="text-[#493627]/60  font-[Garet_Book]">Subtotal</span>
                 <span className="font-medium">{formatPrice(total)}</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-[#493627]/60">Shipping</span>
-                <span className="italic text-xs">Calculated at next step</span>
+                <span className="text-[#493627]/60 font-[Garet_Book]">Shipping</span>
+                <span className="italic text-xs  font-[Garet_Book]">Calculated at next step</span>
               </div>
               
-              <div className="pt-6 mt-6 border-t border-[#493627]/10 flex justify-between items-end">
+              <div className="pt-6 mt-6 border-t border-[#493627]/10 flex justify-between items-end font-[Bai_Jamjuree]">
                 <span className="text-sm font-bold uppercase tracking-widest">Total</span>
                 <span className="text-2xl font-bold tracking-tighter text-[#493627]">
                   {formatPrice(total)}
@@ -179,17 +179,17 @@ export default function Cart() {
 
             <Link
               to="/checkout"
-              className="block w-full mt-10 bg-[#493627] text-[#F9F7F2] py-5 text-center text-xs font-bold uppercase tracking-[0.3em] rounded hover:opacity-90 transition-all"
+              className="block w-full mt-10 bg-[#493627] text-[#F9F7F2] py-5 text-center text-xs font-bold uppercase tracking-[0.3em] rounded hover:opacity-90 transition-all font-[Bai_Jamjuree]"
             >
               Checkout
             </Link>
 
-            <p className="mt-6 text-[10px] text-center text-[#493627]/40 uppercase tracking-widest leading-loose px-4">
+            <p className="mt-6 text-[10px] text-center text-[#493627]/40 uppercase tracking-widest leading-loose px-4 font-[Garet_Book] ">
               Taxes and shipping fees will be applied during the final stage of your purchase.
             </p>
           </div>
 
-          <div className="mt-8 px-2">
+          <div className="mt-8 px-2  font-[Garet_Book]">
             <div className="flex items-center gap-3 text-[#493627]/60">
               <span className="text-xs">🔒</span>
               <span className="text-[10px] uppercase tracking-widest font-medium">

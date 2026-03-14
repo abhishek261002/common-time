@@ -16,7 +16,7 @@ export default function HeroSection({
   playsInline
   className="absolute inset-0 w-full h-full object-cover"
 >
-  <source src="/bg-video/2909914-uhd_3840_2024_24fps.mp4" type="video/mp4" />
+  <source src="/bg-video/hero-bg.mp4" type="video/mp4" />
   {/* Fallback image if video fails to load */}
   <img
     src="/herobg.jpg"

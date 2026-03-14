@@ -6,6 +6,8 @@ import CenteredRevealSection from "../components/editorial/SplitSection";
 import CitySection from "../components/editorial/CitySection";
 import ProductGrid from "../components/commerce/ProductGrid";
 import Container from "../components/layout/Container";
+import GalleryMarquee from "../components/editorial/GalleryMarquee";
+import InstagramSection from "../components/editorial/InstagramSection";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -26,6 +28,28 @@ export default function Home() {
 
   return (
     <div className="bg-white">
+      {/* CSS for the Shimmer Effect */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes shiny {
+          0% { background-position: 200% center; }
+          100% { background-position: -200% center; }
+        }
+        .shiny-text {
+          color: #1a1a1a;
+          background: linear-gradient(
+            120deg, 
+            rgba(26, 26, 26, 1) 45%, 
+            rgba(139, 115, 85, 0.8) 50%, 
+            rgba(26, 26, 26, 1) 55%
+          );
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shiny 6s linear infinite;
+          line-height: 1.2;
+        }
+      `}} />
+
       <HeroSection
         headline="Designed for the moments between"
         subtext=""
@@ -33,43 +57,50 @@ export default function Home() {
         ctaHref="/shop"
       />
 
-     <CenteredRevealSection
-  // Combine your previous headline and body into one string for a seamless reveal
-  headline="Pourers of the world’s best coffees and providers of the tools and techniques that make it yours.
-"
-  linkText="Visit Us"
-  linkHref="/locations"
-/>
+      <CenteredRevealSection
+        headline="Coffee, conversation, and small moments that make the day better."
+        linkText="Visit Us"
+        linkHref="/locations"
+      />
 
-      <section className="py-16 md:py-24 bg-[#fafaf8]">
-        <Container>
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2 font-[Garet_Book]">Curated Selection</p>
-          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-10 font-[Bai_Jamjuree] ">Coffee Highlights</h2>
-          <ProductGrid products={featuredCoffee} columns={4} />
-        </Container>
-      </section>
+      <GalleryMarquee />
 
-      <section className="py-16 md:py-24">
+      {/* --- Objects & Equipment Section with Shimmer --- */}
+      <section className="bg-[#fafaf8] py-24 md:py-32 border-b border-black/5">
         <Container>
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2 font-[Garet_Book]">Curated Selection</p>
-          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-10 font-[Bai_Jamjuree] ">Objects & Equipment</h2>
+          <div className="flex flex-col items-start mb-16 md:mb-24">
+            {/* Sub-label with Shimmer */}
+            <span className="shiny-text py-2 inline-block overflow-visible font-[Bai_Jamjuree] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic mb-4">
+              Curated Selection
+            </span>
+            
+            {/* Main Heading with Shimmer - & remains unchanged */}
+            <div className="flex items-center gap-4">
+              <div className="h-[1px] w-12 bg-black/20 hidden md:block"></div>
+              <h2 className="text-4xl md:text-6xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
+                <span className="shiny-text py-2 inline-block overflow-visible">Objects & Equipment</span> 
+              </h2>
+            </div>
+          </div>
+
           <ProductGrid products={featuredObjects} columns={4} />
+          
+          <div className="mt-20 flex justify-end">
+            <div className="h-[1px] w-24 bg-black/5"></div>
+          </div>
         </Container>
       </section>
 
-      {/* Partner Logos Marquee */}
       <PartnerLogos />
-
+      <InstagramSection />
       <CitySection cities={["Vasant-Vihar", "Lodhi-Colony", "Khan-Market"]} />
 
-     <section className="py-20 flex flex-col items-center justify-center font-[Garet_Book]">
-  {/* A very thin, short divider */}
-  <div className="w-12 h-px bg-gray-200 mb-8" />
-  
-  <p className="text-sm text-gray-400 uppercase tracking-[0.3em] font-medium">
-    A concept by <span className="text-gray-900">Bhatia Hospitality Group</span>
-  </p>
-</section>
+      <section className="py-20 flex flex-col items-center justify-center font-[Garet_Book]">
+        <div className="w-12 h-px bg-gray-200 mb-8" />
+        <p className="text-sm text-gray-400 uppercase tracking-[0.3em] font-medium">
+          A concept by <span className="text-gray-900">Bhatia Hospitality Group</span>
+        </p>
+      </section>
     </div>
   );
 }
@@ -116,7 +147,6 @@ function PartnerLogos() {
           Listen in to what others are saying
         </p>
 
-        {/* Marquee container */}
         <div className="relative w-full overflow-hidden">
           <div className="flex animate-marquee hover:[animation-play-state:paused]">
             {[...brands, ...brands].map((brand, i) => (
@@ -138,7 +168,6 @@ function PartnerLogos() {
           </div>
         </div>
 
-        {/* Scoped animation styles */}
         <style>{`
           @keyframes marquee {
             0% { transform: translateX(0); }
