@@ -66,11 +66,11 @@ export default function Home() {
       <GalleryMarquee />
 
       {/* --- Objects & Equipment Section with Shimmer --- */}
-      <section className="bg-[#fafaf8] py-24 md:py-32 border-b border-black/5">
+      <section className="bg-[#fafaf8] py-12 md:py-20 border-b border-black/5">
         <Container>
           <div className="flex flex-col items-start mb-16 md:mb-24">
             {/* Sub-label with Shimmer */}
-            <span className="shiny-text py-2 inline-block overflow-visible font-[Bai_Jamjuree] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic mb-4">
+            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic mb-4">
               Curated Selection
             </span>
             
@@ -95,12 +95,14 @@ export default function Home() {
       <InstagramSection />
       <CitySection cities={["Vasant-Vihar", "Lodhi-Colony", "Khan-Market"]} />
 
-      <section className="py-20 flex flex-col items-center justify-center font-[Garet_Book]">
-        <div className="w-12 h-px bg-gray-200 mb-8" />
-        <p className="text-sm text-gray-400 uppercase tracking-[0.3em] font-medium">
-          A concept by <span className="text-gray-900">Bhatia Hospitality Group</span>
-        </p>
-      </section>
+     <section className="py-10 flex flex-col items-center justify-center font-[Garet_Book] w-full bg-[#fafaf8]">
+  {/* A very thin, short divider */}
+  <div className="w-12 h-px bg-gray-200 mb-8 mx-auto" />
+  
+  <p className="text-sm text-gray-400 uppercase tracking-[0.3em] font-medium text-center px-6 leading-relaxed">
+    A concept by <span className="text-gray-900">Bhatia Hospitality Group</span>
+  </p>
+</section>
     </div>
   );
 }

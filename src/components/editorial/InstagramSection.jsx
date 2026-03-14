@@ -10,7 +10,7 @@ const InstagramSection = () => {
 
   const reels = [
     { id: 1, thumbnail: "/gallery-marquee/IMG_0036.JPG", videoSrc: "/reels-video/reel01.mp4" },
-    { id: 2, thumbnail: "/gallery-marquee/IMG_4483.JPG", videoSrc: "/reels-video/reels02.mp4" },
+    { id: 2, thumbnail: "/gallery-marquee/IMG_4483.JPG", videoSrc: "/reels-video/Video-942.mp4" },
     { id: 3, thumbnail: "/gallery-marquee/IMG_4598.JPG", videoSrc: "/reels-video/reels03.mp4" },
     { id: 4, thumbnail: "/gallery-marquee/CT-05.jpg", videoSrc: "/reels-video/Video-129.mp4" },
     { id: 5, thumbnail: "/gallery-marquee/IMG_4761.JPG", videoSrc: "/reels-video/Video-769.mp4" },
@@ -59,7 +59,7 @@ const InstagramSection = () => {
   };
 
   return (
-    <section className="bg-[#fafaf8] pt-24 md:pt-32 pb-12 md:pb-16 overflow-hidden border-b border-black/5">
+    <section className="bg-[#fafaf8] pt-12 md:pt-20 pb-12 md:pb-16 overflow-hidden border-b border-black/5">
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes shiny {
           0% { background-position: 200% center; }

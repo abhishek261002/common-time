@@ -10,11 +10,12 @@ export default function Header() {
 
   // --- STITCH DESIGN TOKENS ---
   const headerStyles = "bg-[#d9d9d9] border-t-4 border-[#333333] shadow-sm";
-  const navBlockStyles = "bg-white/40 px-6 py-2 flex items-center space-x-8 relative"; 
-  const stitchNavLink = "text-[0.95rem] tracking-[0.05em]  font-[Garet_Book] text-black uppercase hover:opacity-70 transition-opacity";
+  // Standardized height (h-11) and consistent flex behavior
+  const navBlockStyles = "bg-white/40 px-6 h-11 flex items-center space-x-8 relative"; 
+  const stitchNavLink = "text-[0.95rem] tracking-[0.05em] font-[Bai_Jamjuree] text-black uppercase hover:opacity-70 transition-opacity";
 
   return (
-    <header className={`relative z-50 ${headerStyles}  h-[80px] lg:h-24 w-full flex items-center justify-between px-6 lg:px-16`}>
+    <header className={`relative z-50 ${headerStyles} h-[80px] lg:h-24 w-full flex items-center justify-between px-6 lg:px-16`}>
       <style>{`
         .nav-link-custom { position: relative; }
         .nav-link-custom::after {
@@ -52,7 +53,7 @@ export default function Header() {
         .dropdown-link:hover { color: #1A1A1A; }
       `}</style>
 
-      {/* 1. MOBILE MENU TOGGLE (Visible only on mobile) */}
+      {/* 1. MOBILE MENU TOGGLE */}
       <div className="flex lg:hidden items-center">
         <button 
           className="text-[#1A1A1A] z-[60]" 
@@ -62,12 +63,12 @@ export default function Header() {
         </button>
       </div>
 
-      {/* 2. LEFT DESKTOP NAVIGATION (Hidden on mobile) */}
-      <div className="hidden lg:flex flex-1 items-center h-full">
+      {/* 2. LEFT DESKTOP NAVIGATION - ml-6 added to match right side mr-6 */}
+      <div className="hidden lg:flex flex-1 items-center h-full ml-6">
         <nav className={navBlockStyles}>
           {/* SHOP */}
           <div className="group h-full flex items-center">
-            <Link to="/shop" className={`${stitchNavLink} nav-link-custom font-[Garet_Book]`}>SHOP</Link>
+            <Link to="/shop" className={`${stitchNavLink} nav-link-custom`}>SHOP</Link>
             <div className="dropdown-panel absolute top-full left-0 mt-0 w-[550px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
               <div className="flex flex-col space-y-4 font-[Garet_Book]">
                 <Link to="/orders" className="dropdown-link">My Orders</Link>
@@ -80,7 +81,7 @@ export default function Header() {
             </div>
           </div>
 
-          {/* CONNECT */}
+          {/* LOCATIONS */}
           <div className="group h-full flex items-center">
             <Link to="/locations" className={`${stitchNavLink} nav-link-custom`}>LOCATIONS</Link>
             <div className="dropdown-panel absolute top-full left-0 mt-0 w-[550px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
@@ -96,7 +97,7 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* 3. CENTER LOGO (Always visible) */}
+      {/* 3. CENTER LOGO */}
       <Link to="/" className="flex items-center gap-2 px-4 shrink-0">
         <img src="/logo.jpg" alt="Common Time Logo" className="h-8 w-8 object-contain" />
         <div className="flex items-center gap-1 leading-[1.1]">
@@ -107,17 +108,12 @@ export default function Header() {
 
       {/* 4. RIGHT NAVIGATION & UTILITIES */}
       <div className="flex flex-1 items-center justify-end h-full">
-        {/* Desktop Menu/Auth (Hidden on mobile) */}
         <nav className={`hidden lg:flex ${navBlockStyles} mr-6`}>
+          {/* MENU - Button removed to match left side text-only links */}
           <div className="group h-full flex items-center">
             <Link to="/" className={`${stitchNavLink} nav-link-custom`}>
-            <button
-            onClick={() => window.open("/menu.pdf", "_blank")}
-            className="px-4 h-9 sm:h-10 flex items-center justify-center text-gray-900 text-sm sm:text-base border border-gray-200 rounded-full hover:bg-gray-100 transition-colors"
-            title="View Menu"
-          >
-            Menu
-          </button> </Link>
+              MENU
+            </Link>
             <div className="dropdown-panel absolute top-full right-0 mt-0 w-[500px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
               <div className="flex flex-col space-y-4 font-[Garet_Book]">
                 <Link to="/menu" className="dropdown-link text-3xl">Cafe Menu</Link>
@@ -129,7 +125,8 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="flex items-center space-x-6">
+          {/* AUTH */}
+          <div className="flex items-center h-full">
             {user ? (
               <button onClick={() => signOut()} className={`${stitchNavLink} nav-link-custom`}>LOGOUT</button>
             ) : (
@@ -138,7 +135,7 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* UTILITY ICONS (Always Visible) */}
+        {/* UTILITY ICONS */}
         <div className="flex items-center space-x-4 lg:space-x-6">
           <CartIcon />
           <a href="https://www.instagram.com/itscommontime" target="_blank" rel="noreferrer" className="text-[#1A1A1A] hover:opacity-70 transition-opacity">
@@ -147,7 +144,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* 5. MOBILE MENU OVERLAY (Original Logic) */}
+      {/* 5. MOBILE MENU OVERLAY */}
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 top-[80px] bg-[#F9F7F2] z-50 flex flex-col p-8 space-y-8 animate-in fade-in slide-in-from-top-5">
           <Link to="/shop" className="text-4xl font-light uppercase tracking-tighter text-[#666666]" onClick={() => setIsMobileMenuOpen(false)}>Shop</Link>

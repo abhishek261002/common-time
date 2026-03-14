@@ -14,7 +14,6 @@ const GalleryMarquee = () => {
     "/gallery-marquee/IMG_5853.JPG",
   ];
 
-  // Helper Component for consistent shimmer
   const ShinyText = ({ children, className = "" }) => {
     return (
       <span className={`shiny-text py-2 inline-block overflow-visible ${className}`}>
@@ -24,8 +23,7 @@ const GalleryMarquee = () => {
   };
 
   return (
-    <section className="bg-[#fafaf8] py-24 md:py-32 overflow-hidden w-full border-y border-black/5">
-      {/* Shimmer & Marquee Animations */}
+    <section className="bg-[#fafaf8] py-24 md:py-20 overflow-hidden w-full border-y border-black/5">
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes shiny {
           0% { background-position: 200% center; }
@@ -59,7 +57,6 @@ const GalleryMarquee = () => {
         }
       `}} />
 
-      {/* Elevated Header Section */}
       <Container>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
           <div className="flex flex-col items-start">
@@ -77,9 +74,7 @@ const GalleryMarquee = () => {
         </div>
       </Container>
 
-      {/* Marquee Container */}
       <div className="relative w-full">
-        {/* Subtle Side Fades */}
         <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#fafaf8] to-transparent z-10 pointer-events-none"></div>
         <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#fafaf8] to-transparent z-10 pointer-events-none"></div>
 
@@ -91,20 +86,20 @@ const GalleryMarquee = () => {
                 <img
                   src={src}
                   alt={`Common Time Interior ${index + 1}`}
-                  className="h-[400px] w-auto min-w-[500px] object-cover rounded-none transition-all duration-1000 ease-in-out"
+                  className="h-[280px] md:h-[400px] w-auto min-w-[320px] md:min-w-[500px] object-cover rounded-none transition-all duration-1000 ease-in-out"
                 />
               </div>
             ))}
           </div>
 
-          {/* Duplicate Set for Loop */}
+          {/* Loop Set */}
           <div className="flex gap-6 px-3" aria-hidden="true">
             {galleryImages.map((src, index) => (
               <div key={`wrapper-2-${index}`} className="relative group">
                 <img
                   src={src}
                   alt=""
-                  className="h-[400px] w-auto min-w-[500px] object-cover rounded-none grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out"
+                  className="h-[280px] md:h-[400px] w-auto min-w-[320px] md:min-w-[500px] object-cover rounded-none grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out"
                 />
               </div>
             ))}

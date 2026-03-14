@@ -25,7 +25,7 @@ export default function HeroSection({
   />
 </video>
       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 gap-8">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-[Bai_Jamjuree] text-white tracking-[0.02em] leading-tight mb-4">
           {headline || "designed for the moments between"}
         </h1>
