@@ -117,7 +117,7 @@ export default function Orders() {
                         <img
                           src={oi.product?.image_url || "/newshero.jpg"}
                           alt={oi.product?.name}
-                          className="w-16 h-16 object-cover grayscale rounded-sm"
+                          className="w-16 h-16 object-cover rounded-sm"
                         />
                         <div className="flex-1">
                           <p className="font-medium text-sm">{oi.product?.name}</p>

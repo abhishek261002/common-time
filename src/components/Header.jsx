@@ -9,10 +9,10 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // --- STITCH DESIGN TOKENS ---
-  const headerStyles = "bg-[#d9d9d9] border-t-4 border-[#333333] shadow-sm";
+  const headerStyles = "bg-[#F6F1EB] border-t-4 border-[#333333] shadow-sm";
   // Standardized height (h-11) and consistent flex behavior
   const navBlockStyles = "bg-white/40 px-6 h-11 flex items-center space-x-8 relative"; 
-  const stitchNavLink = "text-[0.95rem] tracking-[0.05em] font-[Bai_Jamjuree] text-black uppercase hover:opacity-70 transition-opacity";
+  const stitchNavLink = "text-[16px] tracking-[0.05em] font-[Bai_Jamjuree] text-black uppercase hover:opacity-70 transition-opacity";
 
   return (
     <header className={`relative z-50 ${headerStyles} h-[80px] lg:h-24 w-full flex items-center justify-between px-6 lg:px-16`}>
@@ -42,8 +42,8 @@ export default function Header() {
           pointer-events: auto;
         }
         .dropdown-link {
-          font-size: 2.25rem;
-          font-weight: 300;
+          font-size: 25px;
+          font-weight: 900;
           color: #71717a;
           text-transform: uppercase;
           letter-spacing: 0.05em;
@@ -69,8 +69,8 @@ export default function Header() {
           {/* SHOP */}
           <div className="group h-full flex items-center">
             <Link to="/shop" className={`${stitchNavLink} nav-link-custom`}>SHOP</Link>
-            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[550px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
-              <div className="flex flex-col space-y-4 font-[Garet_Book]">
+            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[450px] bg-[#FAF7F3]  px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
+              <div className="flex flex-col space-y-1 font-[Garet_Book]">
                 <Link to="/orders" className="dropdown-link">My Orders</Link>
                 <Link to="/profile" className="dropdown-link">Profile</Link>
                 <Link to="/shop" className="dropdown-link">Order Online</Link>
@@ -83,11 +83,12 @@ export default function Header() {
 
           {/* LOCATIONS */}
           <div className="group h-full flex items-center">
-            <Link to="/locations" className={`${stitchNavLink} nav-link-custom`}>LOCATIONS</Link>
-            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[550px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
-              <div className="flex flex-col space-y-4 font-[Garet_Book]">
-                <Link to="/about" className="dropdown-link">About</Link>
-                <Link to="/locations" className="dropdown-link">Our Locations</Link>
+            <Link to="#" className={`${stitchNavLink} nav-link-custom`}>LOCATIONS</Link>
+            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[450px] bg-[#FAF7F3] px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
+              <div className="flex flex-col space-y-1 font-light font-[Garet_Book]">
+                <Link to="locations/lodhi-colony" className="dropdown-link">Lodhi Colony</Link>
+                <Link to="/locations/vasant-vihar" className="dropdown-link">Vasant vihar</Link>
+                <Link to="/locations/khan-market" className="dropdown-link">Khan market</Link>
               </div>
               <div className="w-32 h-44 overflow-hidden">
                 <img src="header-dropdown/IMG_5713.JPG" alt="Locations" className="w-full h-full object-cover" />
@@ -114,8 +115,8 @@ export default function Header() {
             <Link to="/" className={`${stitchNavLink} nav-link-custom`}>
               MENU
             </Link>
-            <div className="dropdown-panel absolute top-full right-0 mt-0 w-[500px] bg-[#E5E5E5] p-10 flex justify-between items-end shadow-sm z-50">
-              <div className="flex flex-col space-y-4 font-[Garet_Book]">
+            <div className="dropdown-panel absolute top-full right-0 mt-0 w-[450px] bg-[#FAF7F3] px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
+              <div className="flex flex-col space-y-1 font-[Garet_Book]">
                 <Link to="/menu" className="dropdown-link text-3xl">Cafe Menu</Link>
                 <Link to="/shop" className="dropdown-link text-3xl">Order</Link>
               </div>

@@ -23,7 +23,7 @@ const GalleryMarquee = () => {
   };
 
   return (
-    <section className="bg-[#fafaf8] py-24 md:py-20 overflow-hidden w-full border-y border-black/5">
+    <section className="bg-[#fafaf8]   overflow-hidden w-full border-y border-black/5">
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes shiny {
           0% { background-position: 200% center; }
@@ -59,7 +59,7 @@ const GalleryMarquee = () => {
 
       <Container>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
-          <div className="flex flex-col items-start">
+          {/* <div className="flex flex-col items-start">
             <ShinyText className="font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic">
               Spatial Experience
             </ShinyText>
@@ -70,7 +70,7 @@ const GalleryMarquee = () => {
                 <ShinyText>A Glimpse Inside</ShinyText>
               </h2>
             </div>
-          </div>
+          </div> */}
         </div>
       </Container>
 

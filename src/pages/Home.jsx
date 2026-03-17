@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "../services/supabase";
 import HeroSection from "../components/editorial/HeroSection";
 import CenteredRevealSection from "../components/editorial/SplitSection";
-import CitySection from "../components/editorial/CitySection";
+import {LuxuryLocationCard} from "../components/editorial/CitySection";
 import ProductGrid from "../components/commerce/ProductGrid";
 import Container from "../components/layout/Container";
 import GalleryMarquee from "../components/editorial/GalleryMarquee";
@@ -25,7 +25,39 @@ export default function Home() {
 
   const featuredCoffee = products.filter((p) => p.category === "coffee").slice(0, 4);
   const featuredObjects = products.filter((p) => p.category === "merchandise").slice(0, 4);
-
+  const locations = [
+  {
+    name: "Lodhi Colony",
+    area: "Meherchand Market",
+    description:
+      "Our minimalist flagship blending Amsterdam’s bakery culture with Japanese precision. A sanctuary of light and linear design in the heart of New Delhi.",
+    address: "Shop 2–3, Meherchand Market, New Delhi 110003",
+    hours: "08:00 AM — 10:00 PM",
+    imageUrl: "/locations/IMG_4886.JPG",
+    locationLink:
+      "https://maps.google.com/?q=Common+Time+Meherchand+Market+Lodhi+Colony+New+Delhi",
+  },
+  {
+    name: "Vasant Vihar",
+    area: "Basant Lok",
+    description:
+      "A sleek neighborhood retreat serving artisan brews and refined bakes. Designed as a creative hub where community meets curated specialty coffee.",
+    address: "Basant Lok Market, Vasant Vihar, New Delhi 110057",
+    hours: "08:00 AM — 10:00 PM",
+    imageUrl: "/locations/IMG_9504.JPG",
+    locationLink: "https://maps.app.goo.gl/P7CNpQL1mJG3xS2o9",
+  },
+  {
+    name: "Khan Market",
+    area: "Coming Soon",
+    description:
+      "Our upcoming evolution. A new perspective on the Common Time experience, arriving soon in Delhi's most iconic lifestyle destination.",
+    address: "Opening Winter 2025",
+    hours: "Announcing Soon",
+    imageUrl: "/locations/huma-kabakci-oRk4Ep65tRc-unsplash.jpg",
+    locationLink: "https://maps.google.com/?q=Khan+Market+New+Delhi",
+  },
+];
   return (
     <div className="bg-white">
       {/* CSS for the Shimmer Effect */}
@@ -57,18 +89,16 @@ export default function Home() {
         ctaHref="/shop"
       />
 
-      <CenteredRevealSection
+      {/* <CenteredRevealSection
         headline="Coffee, conversation, and small moments that make the day better."
         linkText="Visit Us"
         linkHref="/locations"
-      />
+      /> */}
 
-      <GalleryMarquee />
-
-      {/* --- Objects & Equipment Section with Shimmer --- */}
-      <section className="bg-[#fafaf8] py-12 md:py-20 border-b border-black/5">
+      {/* <GalleryMarquee /> */}
+         <section className="bg-[#fafaf8] py-12 md:py-12 border-b border-black/5">
         <Container>
-          <div className="flex flex-col items-start mb-16 md:mb-24">
+          <div className="flex flex-col items-start mb-16 md:mb-16">
             {/* Sub-label with Shimmer */}
             <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic mb-4">
               Curated Selection
@@ -77,24 +107,69 @@ export default function Home() {
             {/* Main Heading with Shimmer - & remains unchanged */}
             <div className="flex items-center gap-4">
               <div className="h-[1px] w-12 bg-black/20 hidden md:block"></div>
-              <h2 className="text-4xl md:text-6xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
+              <h2 className="text-4xl md:text-5xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
+                <span className="shiny-text py-2 inline-block overflow-visible">Coffee Highlights</span> 
+              </h2>
+            </div>
+          </div>
+          <ProductGrid products={featuredCoffee} columns={4} />
+          
+          {/* <div className="mt-20 flex justify-end">
+            <div className="h-[1px] w-24 bg-black/5"></div>
+          </div> */}
+        </Container>
+      </section>
+      {/* --- Objects & Equipment Section with Shimmer --- */}
+      <section className="bg-[#fafaf8] py-12 md:py-12 border-b border-black/5">
+        <Container>
+          <div className="flex flex-col items-start mb-16 md:mb-16">
+            {/* Sub-label with Shimmer */}
+            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic mb-4">
+              Curated Selection
+            </span>
+            
+            {/* Main Heading with Shimmer - & remains unchanged */}
+            <div className="flex items-center gap-4">
+              <div className="h-[1px] w-12 bg-black/20 hidden md:block"></div>
+              <h2 className="text-4xl md:text-5xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
                 <span className="shiny-text py-2 inline-block overflow-visible">Objects & Equipment</span> 
               </h2>
             </div>
           </div>
-
           <ProductGrid products={featuredObjects} columns={4} />
           
-          <div className="mt-20 flex justify-end">
+          {/* <div className="mt-20 flex justify-end">
             <div className="h-[1px] w-24 bg-black/5"></div>
-          </div>
+          </div> */}
         </Container>
       </section>
 
-      <PartnerLogos />
-      <InstagramSection />
-      <CitySection cities={["Vasant-Vihar", "Lodhi-Colony", "Khan-Market"]} />
+      
+      {/* <InstagramSection /> */}
+      <main className="bg-[#fafaf8] min-h-screen py-12 md:py-20">
+      <Container>
+        {/* Header - Consistent with your homepage style */}
+        <div className="mb-16 flex flex-col items-start">
+          <span className="font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] text-[#8b7355] font-semibold italic mb-4">
+            Physical Presence
+          </span>
+          <div className="flex items-center gap-4">
+            <div className="h-[1px] w-12 bg-black/20 hidden md:block"></div>
+            <h1 className="text-5xl md:text-5xl font-light tracking-tighter font-[Bai_Jamjuree] text-black">
+              Our <span className="italic font-normal">Spaces.</span>
+            </h1>
+          </div>
+        </div>
 
+        {/* The Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {locations.map((loc) => (
+            <LuxuryLocationCard key={loc.id} {...loc} />
+          ))}
+        </div>
+      </Container>
+    </main>
+        <PartnerLogos />
      <section className="py-10 flex flex-col items-center justify-center font-[Garet_Book] w-full bg-[#fafaf8]">
   {/* A very thin, short divider */}
   <div className="w-12 h-px bg-gray-200 mb-8 mx-auto" />

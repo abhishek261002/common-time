@@ -17,7 +17,7 @@ export default function Footer() {
           </div>
           
           <nav className="flex gap-x-8">
-            {['shop', 'locations', 'about', 'terms'].map((item) => (
+            {['shop', 'locations', 'terms'].map((item) => (
               <Link 
                 key={item}
                 to={`/${item}`} 

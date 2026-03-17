@@ -30,9 +30,9 @@ export default function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:slug" element={<ProductDetail />} />
-          <Route path="/locations" element={<Locations />} />
+          <Route path="/locations/:slug" element={<Locations />} />
           <Route path="/menu" element={<Menu />} />
-          <Route path="/about" element={<About />} />
+          {/* <Route path="/about" element={<About />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
