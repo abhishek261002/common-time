@@ -1,97 +1,114 @@
 import { useState } from "react";
 import { FaInstagram, FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import CartIcon from "./CartIcon";
 
 export default function Header() {
   const { user, signOut } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // State for the tabbed navigation (matches desktop categories)
+  const [activeMobileTab, setActiveMobileTab] = useState('SHOP');
 
   // --- STITCH DESIGN TOKENS ---
   const headerStyles = "bg-[#F6F1EB] border-t-4 border-[#333333] shadow-sm";
-  // Standardized height (h-11) and consistent flex behavior
   const navBlockStyles = "bg-white/40 px-6 h-11 flex items-center space-x-8 relative"; 
   const stitchNavLink = "text-[16px] tracking-[0.05em] font-[Bai_Jamjuree] text-black uppercase hover:opacity-70 transition-opacity";
+
+  // --- CONTENT MAPPING (Synced with Desktop) ---
+  const mobileMenuData = {
+    SHOP: {
+      links: [
+        { name: "My Orders", path: "/orders" },
+        { name: "Profile", path: "/profile" },
+        { name: "Order Online", path: "/shop" }
+      ],
+      image: "header-dropdown/IMG_6027.avif"
+    },
+    LOCATIONS: {
+      links: [
+        { name: "Lodhi Colony", path: "/locations/lodhi-colony" },
+        { name: "Vasant Vihar", path: "/locations/vasant-vihar" },
+        { name: "Khan Market", path: "/locations/khan-market" }
+      ],
+      image: "header-dropdown/IMG_5713.avif"
+    },
+    MENU: {
+      links: [
+        { name: "Cafe Menu", path: "/menu" },
+        { name: "Order", path: "/shop" }
+      ],
+      image: "header-dropdown/IMG_5589.avif"
+    }
+  };
 
   return (
     <header className={`relative z-50 ${headerStyles} h-[80px] lg:h-24 w-full flex items-center justify-between px-6 lg:px-16`}>
       <style>{`
         .nav-link-custom { position: relative; }
         .nav-link-custom::after {
-          content: '';
-          position: absolute;
-          width: 0;
-          height: 1px;
-          bottom: -4px;
-          left: 0;
-          background-color: currentColor;
+          content: ''; position: absolute; width: 0; height: 1px;
+          bottom: -4px; left: 0; background-color: currentColor;
           transition: width 0.3s ease;
         }
         .group:hover .nav-link-custom::after { width: 100%; }
 
         .dropdown-panel {
-          opacity: 0;
-          visibility: hidden;
+          opacity: 0; visibility: hidden; pointer-events: none;
           transition: opacity 0.3s ease, visibility 0.3s ease;
-          pointer-events: none;
         }
-        .group:hover .dropdown-panel {
-          opacity: 1;
-          visibility: visible;
-          pointer-events: auto;
-        }
+        .group:hover .dropdown-panel { opacity: 1; visibility: visible; pointer-events: auto; }
+        
         .dropdown-link {
-          font-size: 25px;
-          font-weight: 900;
-          color: #71717a;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          transition: color 0.3s ease;
-          line-height: 1.1;
+          font-size: 25px; font-weight: 900; color: #71717a;
+          text-transform: uppercase; letter-spacing: 0.05em;
+          transition: color 0.3s ease; line-height: 1.1;
         }
         .dropdown-link:hover { color: #1A1A1A; }
       `}</style>
 
-      {/* 1. MOBILE MENU TOGGLE */}
+      {/* 1. MOBILE MENU TOGGLE (Uses main FaBars/FaTimes only) */}
       <div className="flex lg:hidden items-center">
         <button 
-          className="text-[#1A1A1A] z-[60]" 
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="text-[#1A1A1A] z-[70]" 
+          onClick={() => {
+            setIsMobileMenuOpen(!isMobileMenuOpen);
+            setActiveMobileTab('SHOP');
+          }}
         >
           {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </button>
       </div>
 
-      {/* 2. LEFT DESKTOP NAVIGATION - ml-6 added to match right side mr-6 */}
+      {/* 2. LEFT DESKTOP NAVIGATION (Untouched) */}
       <div className="hidden lg:flex flex-1 items-center h-full ml-6">
         <nav className={navBlockStyles}>
-          {/* SHOP */}
           <div className="group h-full flex items-center">
             <Link to="/shop" className={`${stitchNavLink} nav-link-custom`}>SHOP</Link>
-            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[450px] bg-[#FAF7F3]  px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
+            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[450px] bg-[#FAF7F3] px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
               <div className="flex flex-col space-y-1 font-[Garet_Book]">
                 <Link to="/orders" className="dropdown-link">My Orders</Link>
                 <Link to="/profile" className="dropdown-link">Profile</Link>
                 <Link to="/shop" className="dropdown-link">Order Online</Link>
               </div>
               <div className="w-32 h-44 overflow-hidden">
-                <img src="header-dropdown/IMG_6027.JPG" alt="Shop" className="w-full h-full object-cover" />
+                <img src="header-dropdown/IMG_6027.avif" alt="Shop" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
 
-          {/* LOCATIONS */}
           <div className="group h-full flex items-center">
             <Link to="#" className={`${stitchNavLink} nav-link-custom`}>LOCATIONS</Link>
             <div className="dropdown-panel absolute top-full left-0 mt-0 w-[450px] bg-[#FAF7F3] px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
               <div className="flex flex-col space-y-1 font-light font-[Garet_Book]">
-                <Link to="locations/lodhi-colony" className="dropdown-link">Lodhi Colony</Link>
+                <Link to="/locations/lodhi-colony" className="dropdown-link">Lodhi Colony</Link>
                 <Link to="/locations/vasant-vihar" className="dropdown-link">Vasant vihar</Link>
                 <Link to="/locations/khan-market" className="dropdown-link">Khan market</Link>
               </div>
               <div className="w-32 h-44 overflow-hidden">
-                <img src="header-dropdown/IMG_5713.JPG" alt="Locations" className="w-full h-full object-cover" />
+                <img src="header-dropdown/IMG_5713.avif" alt="Locations" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -107,26 +124,21 @@ export default function Header() {
         </div>
       </Link>
 
-      {/* 4. RIGHT NAVIGATION & UTILITIES */}
+      {/* 4. RIGHT NAVIGATION & UTILITIES (Untouched) */}
       <div className="flex flex-1 items-center justify-end h-full">
         <nav className={`hidden lg:flex ${navBlockStyles} mr-6`}>
-          {/* MENU - Button removed to match left side text-only links */}
           <div className="group h-full flex items-center">
-            <Link to="/" className={`${stitchNavLink} nav-link-custom`}>
-              MENU
-            </Link>
+            <Link to="/menu" className={`${stitchNavLink} nav-link-custom`}>MENU</Link>
             <div className="dropdown-panel absolute top-full right-0 mt-0 w-[450px] bg-[#FAF7F3] px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
               <div className="flex flex-col space-y-1 font-[Garet_Book]">
                 <Link to="/menu" className="dropdown-link text-3xl">Cafe Menu</Link>
                 <Link to="/shop" className="dropdown-link text-3xl">Order</Link>
               </div>
               <div className="w-32 h-44 overflow-hidden">
-                <img src="header-dropdown/IMG_5589.JPG" alt="Menu" className="w-full h-full object-cover" />
+                <img src="header-dropdown/IMG_5589.avif" alt="Menu" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
-
-          {/* AUTH */}
           <div className="flex items-center h-full">
             {user ? (
               <button onClick={() => signOut()} className={`${stitchNavLink} nav-link-custom`}>LOGOUT</button>
@@ -135,8 +147,6 @@ export default function Header() {
             )}
           </div>
         </nav>
-
-        {/* UTILITY ICONS */}
         <div className="flex items-center space-x-4 lg:space-x-6">
           <CartIcon />
           <a href="https://www.instagram.com/itscommontime" target="_blank" rel="noreferrer" className="text-[#1A1A1A] hover:opacity-70 transition-opacity">
@@ -145,20 +155,104 @@ export default function Header() {
         </div>
       </div>
 
-      {/* 5. MOBILE MENU OVERLAY */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-[80px] bg-[#F9F7F2] z-50 flex flex-col p-8 space-y-8 animate-in fade-in slide-in-from-top-5">
-          <Link to="/shop" className="text-4xl font-light uppercase tracking-tighter text-[#666666]" onClick={() => setIsMobileMenuOpen(false)}>Shop</Link>
-          <Link to="/locations" className="text-4xl font-light uppercase tracking-tighter text-[#666666]" onClick={() => setIsMobileMenuOpen(false)}>Locations</Link>
-          <Link to="/menu" className="text-4xl font-light uppercase tracking-tighter text-[#666666]" onClick={() => setIsMobileMenuOpen(false)}>Menu</Link>
-          <div className="h-px w-full bg-gray-200 my-4" />
-          {user ? (
-            <button onClick={() => { signOut(); setIsMobileMenuOpen(false); }} className="text-left text-xl font-bold uppercase tracking-widest text-[#1A1A1A]">Logout</button>
-          ) : (
-            <Link to="/login" className="text-xl font-bold uppercase tracking-widest text-[#1A1A1A]" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
-          )}
-        </div>
-      )}
+      {/* 5. SEAMLESS MOBILE MENU OVERLAY (Attaches below Navbar) */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }} 
+            animate={{ opacity: 1, height: "auto" }} 
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden absolute top-full left-0 w-full bg-[#FAF7F3] z-[65] shadow-2xl overflow-hidden border-b border-gray-300"
+          >
+            <div className="flex flex-col w-full " >
+              
+              {/* Tab Selector - Using Bai Jamjuree for Structure */}
+              <div className="flex justify-between px-8 py-4 border-b border-gray-300">
+                {['SHOP', 'LOCATIONS', 'MENU'].map((tab) => (
+                  <button 
+                    key={tab}
+                    onClick={() => setActiveMobileTab(tab)}
+                    className={`text-[12px] font-[Bai_Jamjuree] tracking-[0.2em] font-bold pb-2 transition-all ${activeMobileTab === tab ? 'border-b-2 border-black text-black' : 'text-gray-400'}`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+              {/* Dynamic Content Display - Using Garet Book for Links */}
+              <div className="flex justify-between items-end  px-4 pt-6 pb-2 min-h-[260px] ">
+                <div className="flex flex-col space-y-5">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeMobileTab}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      className="flex flex-col space-y-2"
+                    >
+                      {mobileMenuData[activeMobileTab].links.map((link, idx) => (
+                        <Link 
+                          key={idx} 
+                          to={link.path} 
+                          className="text-[24px] font-[Garet_Book] font-black uppercase tracking-tighter text-[#1A1A1A] leading-none hover:text-[#8b7355] transition-colors"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Tab Image Reveal */}
+                <div className="w-40 h-50 overflow-hidden shadow-xl border border-white/50 bg-gray-200 ">
+                  <AnimatePresence mode="wait">
+                    <motion.img 
+                      key={activeMobileTab}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.1 }}
+                      src={mobileMenuData[activeMobileTab].image}
+                      className="w-full h-full object-cover"
+                    />
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Bottom Utility Grid - Bai Jamjuree Labels */}
+              <div className="grid grid-cols-2 border-t border-gray-300">
+                <div className="border-r border-gray-300 p-6 text-center bg-white/40">
+                  {user ? (
+                    <button 
+                      onClick={() => { signOut(); setIsMobileMenuOpen(false); }} 
+                      className="text-[11px] font-[Bai_Jamjuree] font-bold tracking-[0.25em] uppercase text-black"
+                    >
+                      Logout
+                    </button>
+                  ) : (
+                    <Link 
+                      to="/login" 
+                      className="text-[11px] font-[Bai_Jamjuree] font-bold tracking-[0.25em] uppercase text-black" 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Sign In
+                    </Link>
+                  )}
+                </div>
+                <div className="p-6 text-center bg-white/40">
+                  <Link 
+                    to="/cart" 
+                    className="text-[11px] font-[Bai_Jamjuree] font-bold tracking-[0.25em] uppercase text-black" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Cart
+                  </Link>
+                </div>
+              </div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

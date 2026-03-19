@@ -12,7 +12,7 @@ function slugify(str) {
     .replace(/(^-|-$)/g, "");
 }
 
-export default function ProductGrid({ products, columns = 3 }) {
+export default function ProductGrid({ products, columns = 4 }) {
   const { addItem } = useCart();
   const scrollRef = useRef(null);
 
