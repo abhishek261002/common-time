@@ -119,7 +119,7 @@ export default function Header() {
       <Link to="/" className="flex items-center gap-2 px-4 shrink-0">
         <img src="/logo.jpg" alt="Common Time Logo" className="h-8 w-8 object-contain" />
         <div className="flex items-center gap-1 leading-[1.1]">
-          <span className="font-[Bai_Jamjuree] font-light text-gray-900 tracking-tight text-xl sm:text-2xl md:text-3xl lg:text-[32px]">COMMON</span>
+          <span className="font-[Bai_Jamjuree] font-medium text-gray-900 tracking-tight text-xl sm:text-2xl md:text-3xl lg:text-[32px]">COMMON</span>
           <span className="font-[Garet_Book] font-black italic text-gray-900/90 tracking-tight text-xl sm:text-2xl md:text-3xl lg:text-[32px]">TIME</span>
         </div>
       </Link>

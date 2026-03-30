@@ -1,86 +1,82 @@
 export const menuData = {
-  black_coffee: [
-    { name: "Espresso", price: "₹200" },
-    { name: "Long Black (Hot)", price: "₹230" },
-    { name: "Long Black (Iced)", price: "₹250" },
-    { name: "Uncommon Long Black (Hot)", price: "₹230" },
-    { name: "Uncommon Long Black (Iced)", price: "₹250" },
-    { name: "CTCT (Common Time Coffee Tonic)", price: "₹330" },
+  hot_coffee: [
+    { name: "espresso", price: "200", desc: "ask your server for house blend details" },
+    { name: "long black", price: "230", desc: "espresso over water opens aroma and makes it more intense" },
+    { name: "flat white", price: "250", desc: "espresso with silky textured milk" },
+    { name: "competition latte", price: "250", desc: "our version of a latte, inspired by a barista competition drink developed with double ristretto and balance amount of milk less than a usual latte" },
+    { name: "cappuccino", price: "250", desc: "espresso served with standard steamed milk and milk foam" },
+    { name: "cortado", price: "250", desc: "equal parts of espresso and silky textured milk" },
+    { name: "mocha", price: "330", desc: "infused espresso and 70% chocolate finished with smooth textured milk" },
+    { name: "earl grey flat white", price: "300", desc: "espresso with earl grey infused milk" },
+    { name: "nutmeg latte", price: "290", desc: "espresso with steamed milk and nutmeg" },
+    { name: "salted caramel latte", price: "310", desc: "infused espresso with house salted caramel and smooth textured milk" },
+    { name: "spanish latte", price: "310", desc: "espresso with steamed milk and little condensed milk" },
+    { name: "honey cappuccino", price: "290", desc: "standard cappuccino sweetened with honey" },
   ],
-
-  white_coffee: [
-    { name: "Flat White", price: "₹250" },
-    { name: "Competition Latte", price: "₹250" },
-    { name: "Cappuccino", price: "₹250" },
-    { name: "Cortado", price: "₹250" },
-    { name: "Mocha (Hot)", price: "₹310" },
-    { name: "Mocha (Iced)", price: "₹330" },
-    { name: "Earl Grey Flat White", price: "₹280" },
-    { name: "Nutmeg Latte", price: "₹280" },
-    { name: "Unsweetened Iced Latte", price: "₹260" },
-    { name: "CT Iced Latte", price: "₹310" },
+  iced_coffee: [
+    { name: "unsweetened iced latte", price: "270", desc: "espresso with chilled milk" },
+    { name: "common time iced latte", price: "310", desc: "our version of iced latte mildly sweetened with maple and vanilla extract" },
+    { name: "strong iced latte", price: "290", desc: "triple espresso with jaggery and chilled milk" },
+    { name: "iced long black", price: "250", desc: "espresso over water and ice" },
+    { name: "iced bon bon", price: "290", desc: "espresso, condensed milk, little amount of chilled milk" },
+    { name: "iced mocha", price: "350", desc: "espresso, chilled milk, 70% dark chocolate" },
+    { name: "cold black", price: "250", desc: "overnight intense cold brew" },
+    { name: "cold black bumble", price: "320", desc: "orange zest infused overnight cold brew" },
+    { name: "coconut sugar cold black", price: "280", desc: "cold black shaken and sweetened with coconut sugar" },
+    { name: "cocospresso", price: "330", desc: "espresso cold foam, coconut water" },
+    { name: "the big apple", price: "350", desc: "apple cold brew, salted caramel cold foam" },
+    { name: "mont blanc", price: "350", desc: "orange cold brew with vanilla orange cold foam, a refreshing drink invented in melbourne" },
+    { name: "iced brown butter latte", price: "330", desc: "house brown butter reduction shaken with espresso and chilled milk" },
+    { name: "cold coffee", price: "350", desc: "blended espresso with milk and liquid ice cream" },
   ],
-
-  single_origin_filter: [
-    { name: "KDP Kult", price: "₹300" },
-    { name: "India Meets Costa Rica", price: "₹300" },
-    { name: "Sweet Thing!", price: "₹300" },
-  ],
-
-  batched_cold_brew: [
-    { name: "Cold Black", price: "₹230" },
-    { name: "Cold Black Bumble", price: "₹320" },
-    { name: "Cold White", price: "₹250" },
-    { name: "Salted Caramel Cold White", price: "₹280" },
-    { name: "Jaggery Coconut Cold White (Vegan)", price: "₹350" },
-  ],
-
-  specialty_coffee: [
-    { name: "Cold Fashioned", price: "₹350" },
-    { name: "Almost Guinness", price: "₹350" },
-    { name: "Coco Americano", price: "₹350" },
-    { name: "Brekkie For Adults", price: "₹350" },
-    { name: "The Big Apple", price: "₹350" },
-    { name: "Modern Vietnamese", price: "₹350" },
-  ],
-
-  matcha: [
-    { name: "Classic Matcha Latte (Hot/Iced)", price: "₹380" },
-    { name: "Apple Matcha", price: "₹420" },
-    { name: "Raspberry Matcha", price: "₹450" },
-  ],
-
-  drinking_chocolate: [
-    { name: "Hot Chocolate", price: "₹350" },
-    { name: "Spiced Hot Chocolate", price: "₹350" },
-    { name: "Iced Chocolate", price: "₹350" },
-  ],
-
   tea: [
-    { name: "Kashmiri Nergis", price: "₹200" },
-    { name: "Arabian Nights", price: "₹200" },
-    { name: "Vintage Chai", price: "₹200" },
-    { name: "English Breakfast", price: "₹200" },
+    { name: "Monsoon (Lemon Tulsi)", price: "200", desc: "a refreshing blend of lemon and tulsi that's bright, calming, and uplifting" },
+    { name: "Mogra (Jasmine Blossoms)", price: "200", desc: "a delicate green tea infused with fragrant jasmine blossoms for a smooth floral cup" },
+    { name: "Mumbai Mate", price: "200", desc: "a bold chocolate-infused yerba maté layered with warming spices for a rich, energizing cup" },
   ],
-
+  matcha: [
+    { name: "classic matcha latte", price: "380", desc: "hot/iced" },
+    { name: "kyoto fizz", price: "400", desc: "matcha, ice, apple and vanilla house syrup (doesn't contain milk)" },
+    { name: "vanilla matcha latte", price: "400", desc: "hot/iced" },
+    { name: "cherry matcha", price: "400", desc: "house cherry puree, milk, matcha foam" },
+  ],
+  chocolate: [
+    { name: "house hot chocolate", price: "350", desc: "70% single origin, slowly made in a pan / we request you 10-12 minutes" },
+    { name: "iced chocolate", price: "350", desc: "" },
+  ],
   refreshers: [
-    { name: "J&T", price: "₹280" },
-    { name: "Rosemary Cherry Soda", price: "₹250" },
-    { name: "Earl Grey Iced Ginger Tea", price: "₹280" },
-    { name: "Pineapple Lemonade", price: "₹250" },
-    { name: "House Kombucha", price: "₹280" },
+    { name: "earl grey iced ginger tea", price: "250", desc: "earl grey brew, honey ginger syrup, soda" },
+    { name: "sparkling lemonade", price: "240", desc: "" },
+    { name: "fresh orange juice", price: "280", desc: "we request you 10 minutes to prep" },
+    { name: "house kombucha", price: "250", desc: "ginger honey/orange mint" },
+    { name: "cherry soda", price: "250", desc: "house cherry syrup, ice, soda" },
+    { name: "coffee cola", price: "250", desc: "speciality indian filter coffee infused with cinnamon and vanilla, topped with soda" },
+    { name: "soft serve affogato", price: "300", desc: "house soft serve with double espresso" },
   ],
-
-  soft_serve: [
-    { name: "Affogato", price: "₹250" },
-    { name: "Olive Oil And Sea Salt Vanilla", price: "₹200" },
-  ],
-
-  experience: [
-    { name: "Coffee Experience (3 Pour Overs + Barista Journey)", price: "₹1200" },
-  ],
-
-  bakes: [
-    { name: "Rotational Small Batch Bakes", price: "Check Display" },
-  ],
+  baked_goods: [
+    { name: "butter croissant", price: "200", desc: "" },
+    { name: "almond croissant", price: "330", desc: "" },
+    { name: "espresso, kahlua & hazelnut croissant", price: "270", desc: "(contains alcohol)" },
+    { name: "cinnamon roll", price: "180", desc: "" },
+    { name: "oat and anzac cookie (vegan)", price: "225", desc: "" },
+    { name: "choco chip and sea salt cookie", price: "220", desc: "" },
+    { name: "lemon poppy seed coconut tea cake", price: "320", desc: "" },
+    { name: "tomato, olive & riccota cheese danish", price: "360", desc: "" },
+    { name: "raspberry & white chocolate cookie", price: "225", desc: "" },
+    { name: "banana chocolate cinnamon tea cake", price: "320", desc: "" },
+    { name: "gluten free chocolate cake slice", price: "380", desc: "" },
+    { name: "layered carrot cake", price: "380", desc: "" },
+    { name: "pesto, tomato and cheese croissant", price: "350", desc: "" },
+    { name: "garlic cheese croissant", price: "320", desc: "" },
+    { name: "chicken sausage and red bean croissant", price: "380", desc: "" },
+    { name: "ham, mustard & cheese croissant", price: "380", desc: "(contains pork)" },
+    { name: "mushroom croissant", price: "350", desc: "" },
+    { name: "caprese pesto focaccia sandwich", price: "380", desc: "" },
+    { name: "mushroom, onion & chedder focaccia sandwich", price: "380", desc: "" },
+    { name: "peri peri cottage cheese ciabbata sandwich", price: "380", desc: "" },
+    { name: "smoked chipotle chicken focaccia sandwich", price: "400", desc: "" },
+    { name: "avocado, cucumber & dill cream cheese bagel", price: "360", desc: "" },
+    { name: "chicken salami & cream cheese bagel", price: "360", desc: "" },
+    { name: "mama rosa chicken focaccia sandwich", price: "380", desc: "" },
+  ]
 };
