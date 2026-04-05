@@ -8,6 +8,7 @@ import ProductGrid from "../components/commerce/ProductGrid";
 import Container from "../components/layout/Container";
 import GalleryMarquee from "../components/editorial/GalleryMarquee";
 import InstagramSection from "../components/editorial/InstagramSection";
+import Common from "../components/editorial/Common";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -25,7 +26,7 @@ export default function Home() {
 
   const featuredCoffee = products.filter((p) => p.category === "coffee").slice(0, 4);
   const featuredObjects = products.filter((p) => p.category === "merchandise").slice(0, 4);
-  const locations = [
+ const locations = [
   {
     name: "Lodhi Colony",
     area: "Meherchand Market",
@@ -49,13 +50,13 @@ export default function Home() {
   },
   {
     name: "Khan Market",
-    area: "Coming Soon",
+    area: "Rabindra Nagar",
     description:
-      "Our upcoming evolution. A new perspective on the Common Time experience, arriving soon in Delhi's most iconic lifestyle destination.",
-    address: "Opening Winter 2025",
-    hours: "Announcing Soon",
-    imageUrl: "/locations/huma-kabakci-oRk4Ep65tRc-unsplash.jpg",
-    locationLink: "https://maps.google.com/?q=Khan+Market+New+Delhi",
+      "An elevated perspective in Delhi's premier lifestyle destination. Experience our signature brews and bakes within a minimalist, sun-drenched sanctuary.",
+    address: "Second floor, 34, Above Pure Home Living, Khan Market, New Delhi 110003",
+    hours: "08:00 AM — 10:00 PM",
+    imageUrl: "/locations/khanmarket.jpg",
+    locationLink: "https://maps.app.goo.gl/Pri3Eq6u9y7jmHtA6",
   },
 ];
   return (
@@ -83,12 +84,12 @@ export default function Home() {
       `}} />
 
       <HeroSection
-        headline="Designed for the moments between"
+        headline="Elevated rituals"
         subtext=""
         ctaText="Discover"
         ctaHref="/shop"
       />
-
+      <Common />
       {/* <CenteredRevealSection
         headline="Coffee, conversation, and small moments that make the day better."
         linkText="Visit Us"
@@ -98,16 +99,16 @@ export default function Home() {
       {/* <GalleryMarquee /> */}
          <section className="bg-[#fafaf8] py-12 md:py-12 border-b border-black/5">
         <Container>
-          <div className="flex flex-col items-start mb-16 md:mb-16">
+          <div className="flex flex-col items-start mb-10 md:mb-10">
             {/* Sub-label with Shimmer */}
-            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic mb-4">
+            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold italic mb-4">
               Curated Selection
             </span>
             
             {/* Main Heading with Shimmer - & remains unchanged */}
             <div className="flex items-center gap-4">
-              <div className="h-[1px] w-12 bg-black/20 hidden md:block"></div>
-              <h2 className="text-4xl md:text-5xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
+              <div className="h-[1px] w-6 md:w-12 bg-black/20"></div>
+              <h2 className="text-3xl md:text-4xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
                 <span className="shiny-text py-2 inline-block overflow-visible">Coffee Highlights</span> 
               </h2>
             </div>
@@ -120,18 +121,18 @@ export default function Home() {
         </Container>
       </section>
       {/* --- Objects & Equipment Section with Shimmer --- */}
-      <section className="bg-[#fafaf8] py-12 md:py-12 border-b border-black/5">
+      <section className="bg-[#fafaf8] pb-12 md:py-12 border-b border-black/5">
         <Container>
-          <div className="flex flex-col items-start mb-16 md:mb-16">
+          <div className="flex flex-col items-start mb-10 md:mb-10">
             {/* Sub-label with Shimmer */}
-            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic mb-4">
+            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold italic mb-4">
               Curated Selection
             </span>
             
             {/* Main Heading with Shimmer - & remains unchanged */}
             <div className="flex items-center gap-4">
-              <div className="h-[1px] w-12 bg-black/20 hidden md:block"></div>
-              <h2 className="text-4xl md:text-5xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
+              <div className="h-[1px] w-6 md:w-12 bg-black/20"></div>
+              <h2 className="text-3xl md:text-4xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
                 <span className="shiny-text py-2 inline-block overflow-visible">Objects & Equipment</span> 
               </h2>
             </div>
@@ -146,16 +147,16 @@ export default function Home() {
 
       
       {/* <InstagramSection /> */}
-      <main className="bg-[#fafaf8] min-h-screen py-12 md:py-20">
+      <main className="bg-[#fafaf8] min-h-screen py-12 md:py-12">
       <Container>
         {/* Header - Consistent with your homepage style */}
-        <div className="mb-16 flex flex-col items-start">
-          <span className="font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] text-[#8b7355] font-semibold italic mb-4">
+        <div className="mb-10 md:mb-10 flex flex-col items-start">
+          <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold italic mb-4">
             Physical Presence
           </span>
           <div className="flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-black/20 hidden md:block"></div>
-            <h1 className="text-5xl md:text-5xl font-light tracking-tighter font-[Bai_Jamjuree] text-black">
+            <div className="h-[1px] w-6 md:w-12 bg-black/20"></div>
+            <h1 className="text-3xl md:text-4xl font-light tracking-tighter font-[Bai_Jamjuree] text-black">
               Our <span className="italic font-normal">Spaces.</span>
             </h1>
           </div>
@@ -174,7 +175,7 @@ export default function Home() {
   {/* A very thin, short divider */}
   <div className="w-12 h-px bg-gray-200 mb-8 mx-auto" />
   
-  <p className="text-sm text-gray-400 uppercase tracking-[0.3em] font-medium text-center px-6 leading-relaxed">
+  <p className="text-xs  uppercase tracking-[0.1em] font-light text-center px-6 leading-relaxed">
     A concept by <span className="text-gray-900">Bhatia Hospitality Group</span>
   </p>
 </section>

@@ -132,6 +132,10 @@ export default function Menu() {
 
   useEffect(() => {
     if (showSelector) {
+      // --- FIX: RESET SELECTOR STATE WHEN OPENING ---
+      setActiveIdx(0);
+      setScrollProgress(0);
+      
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
     } else {

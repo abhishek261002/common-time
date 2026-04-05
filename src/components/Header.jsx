@@ -13,7 +13,7 @@ export default function Header() {
   const [activeMobileTab, setActiveMobileTab] = useState('SHOP');
 
   // --- STITCH DESIGN TOKENS ---
-  const headerStyles = "bg-[#F6F1EB] border-t-4 border-[#333333] shadow-sm";
+  const headerStyles = "bg-white border-t-4 border-[#333333] shadow-sm";
   const navBlockStyles = "bg-white/40 px-6 h-11 flex items-center space-x-8 relative"; 
   const stitchNavLink = "text-[16px] tracking-[0.05em] font-[Bai_Jamjuree] text-black uppercase hover:opacity-70 transition-opacity";
 
@@ -41,6 +41,9 @@ export default function Header() {
         { name: "Order", path: "/shop" }
       ],
       image: "header-dropdown/IMG_5589.avif"
+    },
+    ORDER: {
+      links: [{name: "Order Online", path: "/shop"} ],
     }
   };
 
@@ -87,41 +90,38 @@ export default function Header() {
         <nav className={navBlockStyles}>
           <div className="group h-full flex items-center">
             <Link to="/shop" className={`${stitchNavLink} nav-link-custom`}>SHOP</Link>
-            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[450px] bg-[#FAF7F3] px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
+            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[350px] h-44 bg-white px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
               <div className="flex flex-col space-y-1 font-[Garet_Book]">
                 <Link to="/orders" className="dropdown-link">My Orders</Link>
                 <Link to="/profile" className="dropdown-link">Profile</Link>
                 <Link to="/shop" className="dropdown-link">Order Online</Link>
               </div>
-              <div className="w-32 h-44 overflow-hidden">
+              {/* <div className="w-32 h-44 overflow-hidden">
                 <img src="header-dropdown/IMG_6027.avif" alt="Shop" className="w-full h-full object-cover" />
-              </div>
+              </div> */}
             </div>
           </div>
 
           <div className="group h-full flex items-center">
             <Link to="#" className={`${stitchNavLink} nav-link-custom`}>LOCATIONS</Link>
-            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[450px] bg-[#FAF7F3] px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
+            <div className="dropdown-panel absolute top-full left-0 mt-0 w-[350px] h-44 bg-white px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
               <div className="flex flex-col space-y-1 font-light font-[Garet_Book]">
                 <Link to="/locations/lodhi-colony" className="dropdown-link">Lodhi Colony</Link>
                 <Link to="/locations/vasant-vihar" className="dropdown-link">Vasant vihar</Link>
                 <Link to="/locations/khan-market" className="dropdown-link">Khan market</Link>
               </div>
-              <div className="w-32 h-44 overflow-hidden">
+              {/* <div className="w-32 h-44 overflow-hidden">
                 <img src="header-dropdown/IMG_5713.avif" alt="Locations" className="w-full h-full object-cover" />
-              </div>
+              </div> */}
             </div>
           </div>
         </nav>
       </div>
 
       {/* 3. CENTER LOGO */}
-      <Link to="/" className="flex items-center gap-2 px-4 shrink-0">
-        <img src="/logo.jpg" alt="Common Time Logo" className="h-8 w-8 object-contain" />
-        <div className="flex items-center gap-1 leading-[1.1]">
-          <span className="font-[Bai_Jamjuree] font-medium text-gray-900 tracking-tight text-xl sm:text-2xl md:text-3xl lg:text-[32px]">COMMON</span>
-          <span className="font-[Garet_Book] font-black italic text-gray-900/90 tracking-tight text-xl sm:text-2xl md:text-3xl lg:text-[32px]">TIME</span>
-        </div>
+      <Link to="/" className="flex items-center lg:mb-2">
+        <img src="/newlogo.png" alt="Common Time Logo" className="object-contain lg:h-[380px]" />
+       
       </Link>
 
       {/* 4. RIGHT NAVIGATION & UTILITIES (Untouched) */}
@@ -129,23 +129,27 @@ export default function Header() {
         <nav className={`hidden lg:flex ${navBlockStyles} mr-6`}>
           <div className="group h-full flex items-center">
             <Link to="/menu" className={`${stitchNavLink} nav-link-custom`}>MENU</Link>
-            <div className="dropdown-panel absolute top-full right-0 mt-0 w-[450px] bg-[#FAF7F3] px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
+            <div className="dropdown-panel absolute top-full right-0 mt-0 w-[350px] h-44 bg-white px-4 pt-15 pb-2 flex justify-between items-end shadow-sm z-50">
               <div className="flex flex-col space-y-1 font-[Garet_Book]">
                 <Link to="/menu" className="dropdown-link text-3xl">Cafe Menu</Link>
                 <Link to="/shop" className="dropdown-link text-3xl">Order</Link>
               </div>
-              <div className="w-32 h-44 overflow-hidden">
+              {/* <div className="w-32 h-44 overflow-hidden">
                 <img src="header-dropdown/IMG_5589.avif" alt="Menu" className="w-full h-full object-cover" />
-              </div>
+              </div> */}
             </div>
           </div>
-          <div className="flex items-center h-full">
+          <div className="group h-full flex items-center">
+            <Link to="/coming-soon" className={`${stitchNavLink} nav-link-custom`}>ORDER</Link>
+            
+          </div>
+          {/* <div className="flex items-center h-full">
             {user ? (
               <button onClick={() => signOut()} className={`${stitchNavLink} nav-link-custom`}>LOGOUT</button>
             ) : (
               <Link to="/login" className={`${stitchNavLink} nav-link-custom`}>LOGIN</Link>
             )}
-          </div>
+          </div> */}
         </nav>
         <div className="flex items-center space-x-4 lg:space-x-6">
           <CartIcon />
@@ -154,7 +158,7 @@ export default function Header() {
           </a>
         </div>
       </div>
-
+      
       {/* 5. SEAMLESS MOBILE MENU OVERLAY (Attaches below Navbar) */}
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -168,7 +172,7 @@ export default function Header() {
               
               {/* Tab Selector - Using Bai Jamjuree for Structure */}
               <div className="flex justify-between px-8 py-4 border-b border-gray-300">
-                {['SHOP', 'LOCATIONS', 'MENU'].map((tab) => (
+                {['SHOP', 'LOCATIONS', 'MENU',].map((tab) => (
                   <button 
                     key={tab}
                     onClick={() => setActiveMobileTab(tab)}
@@ -179,7 +183,7 @@ export default function Header() {
                 ))}
               </div>
               {/* Dynamic Content Display - Using Garet Book for Links */}
-              <div className="flex justify-between items-end  px-4 pt-6 pb-2 min-h-[260px] ">
+              <div className="flex justify-between items-end  px-4 pt-6 pb-2 min-h-[160px] ">
                 <div className="flex flex-col space-y-5">
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -204,7 +208,7 @@ export default function Header() {
                 </div>
 
                 {/* Tab Image Reveal */}
-                <div className="w-40 h-50 overflow-hidden shadow-xl border border-white/50 bg-gray-200 ">
+                {/* <div className="w-40 h-50 overflow-hidden shadow-xl border border-white/50 bg-gray-200 ">
                   <AnimatePresence mode="wait">
                     <motion.img 
                       key={activeMobileTab}
@@ -215,7 +219,7 @@ export default function Header() {
                       className="w-full h-full object-cover"
                     />
                   </AnimatePresence>
-                </div>
+                </div> */}
               </div>
 
               {/* Bottom Utility Grid - Bai Jamjuree Labels */}
@@ -240,11 +244,11 @@ export default function Header() {
                 </div>
                 <div className="p-6 text-center bg-white/40">
                   <Link 
-                    to="/cart" 
+                    to="/" 
                     className="text-[11px] font-[Bai_Jamjuree] font-bold tracking-[0.25em] uppercase text-black" 
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Cart
+                    ORDER
                   </Link>
                 </div>
               </div>

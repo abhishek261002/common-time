@@ -28,15 +28,15 @@ const Locations = () => {
       locationLink: "https://maps.app.goo.gl/P7CNpQL1mJG3xS2o9",
     },
     {
-      slug: "khan-market",
-      city: "Khan Market",
-      area: "Coming Soon",
-      description: "Our upcoming evolution. A new perspective on the Common Time experience, arriving soon in Delhi's most iconic lifestyle destination.",
-      address: "Opening Winter 2025",
-      hours: "Announcing Soon",
-      imageUrl: "/locations/huma-kabakci-oRk4Ep65tRc-unsplash.jpg",
-      locationLink: "https://maps.google.com/?q=Khan+Market+New+Delhi",
-    },
+  slug: "khan-market",
+  city: "Khan Market",
+  area: "Rabindra Nagar",
+  description: "An elevated perspective in Delhi's premier lifestyle destination. Experience our signature brews and bakes within a minimalist, sun-drenched sanctuary.",
+  address: "Second Floor, 34, Above Pure Home Living, Khan Market, New Delhi 110003",
+  hours: "08:00 AM — 10:00 PM",
+  imageUrl: "/locations/khanmarket.jpg",
+  locationLink: "https://maps.app.goo.gl/Pri3Eq6u9y7jmHtA6",
+},
   ];
 
   const loc = locations.find((item) => item.slug === slug);
@@ -238,7 +238,7 @@ const Locations = () => {
             <div className="max-w-md">
               <h3 className="text-[10px] font-[Garet_Book] uppercase tracking-[0.5em] text-[#8b7355] mb-4 font-bold">Indices</h3>
               <h2 className="text-4xl font-[Bai_Jamjuree] font-light tracking-tighter text-black leading-none">
-                Other <span className="italic text-gray-400">Atmospheres.</span>
+                Other <span className="italic ">Atmospheres.</span>
               </h2>
             </div>
             <div className="hidden md:block h-[1px] flex-1 mx-12 bg-black/5"></div>

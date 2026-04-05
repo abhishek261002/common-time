@@ -20,6 +20,7 @@ import Profile from "./pages/Profile.jsx";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import OrderDetail from "./pages/OrderDetail.jsx";
+import ComingSoon from "./pages/ComingSoon.jsx";
 export default function App() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/shop/:slug" element={<ProductDetail />} />
           <Route path="/locations/:slug" element={<Locations />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
           {/* <Route path="/about" element={<About />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

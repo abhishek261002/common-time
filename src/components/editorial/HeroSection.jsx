@@ -26,8 +26,8 @@ export default function HeroSection({
 </video>
       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent" />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 gap-8">
-        <h1 className="text-[28px] font-[Bai_Jamjuree] text-white tracking-[0.02em] leading-tight mb-4">
-          {headline || "designed for the moments between"}
+        <h1 className="text-[20px] font-[Bai_Jamjuree] text-white font-light tracking-[0.02em] leading-tight mb-4">
+          {headline || "Elevated rituals"}
         </h1>
         {subtext && (
           <p className="text-white/90  text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">
