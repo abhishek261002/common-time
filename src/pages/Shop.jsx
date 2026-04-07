@@ -10,28 +10,28 @@ const CATEGORIES = [
     description: "Every object, every ritual, every detail — curated under one roof.",
   },
   {
-    value: "morning_ritual",
-    label: "The Morning Ritual",
+    value: "coffee",
+    label: "coffee",
     sublabel: "Brewing & Enjoying",
     description: "Focused on the art of brewing and enjoying your first drink of the day.",
   },
   {
-    value: "urban_nomad",
-    label: "The Urban Nomad",
-    sublabel: "On The Move",
-    description: "Essential items for those on the move and active lifestyles.",
-  },
-  {
-    value: "living_accents",
+    value: "living accent",
     label: "Living Accents",
     sublabel: "Home & Hosting",
     description: "Tactile pieces designed to elevate home spaces and hosting.",
   },
   {
-    value: "personal_notes",
+    value: "Personal Notes",
     label: "Personal Notes",
     sublabel: "Style & Senses",
     description: "Sensory finishing touches and individual style elements.",
+  },
+  {
+    value: "merchandise",
+    label: "Merchandise",
+    sublabel: "Common Time Goods",
+    description: "common time branded merchandise and collaborations.",
   },
 ];
 
@@ -120,7 +120,7 @@ export default function Shop() {
       `}} />
 
       {/* ── Page Header ── */}
-      <section className="border-b border-black/5 pt-20 pb-10 md:pt-28 md:pb-14 px-4 md:px-8">
+      <section className="border-b border-black/5 pt-14 pb-10 md:pt-14 md:pb-14 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-start">
             <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.4em] font-semibold italic mb-4">

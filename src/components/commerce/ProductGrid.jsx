@@ -99,7 +99,7 @@ export default function ProductGrid({ products, columns = 4 }) {
               <div className="flip-card-inner">
                 {/* FRONT SIDE */}
                 <div className="flip-card-front bg-gray-100 overflow-hidden">
-                  <img src={product.image_url || "/newshero.jpg"} alt={product.name} className="w-full h-full object-cover" />
+                  <img src={product.image_url || "/hot.jpg"} alt={product.name} className="w-full h-full object-cover" />
                   <div className="absolute bottom-3 left-3">
                     <p className="text-[9px] uppercase tracking-[0.2em] text-white bg-black/40 backdrop-blur-sm px-2 py-0.5 font-[Bai_Jamjuree]">
                       {product.name}
