@@ -48,7 +48,7 @@ export default function Header() {
   };
 
   return (
-    <header className={`relative z-50 ${headerStyles} h-[80px] lg:h-24 w-full flex items-center justify-between px-6 lg:px-16`}>
+    <header className={`relative z-50 ${headerStyles} h-[70px] lg:h-18 w-full flex items-center justify-between px-6 lg:px-16`}>
       <style>{`
         .nav-link-custom { position: relative; }
         .nav-link-custom::after {
@@ -119,10 +119,13 @@ export default function Header() {
       </div>
 
       {/* 3. CENTER LOGO */}
-      <Link to="/" className="flex items-center lg:mb-2">
-        <img src="/newlogo.png" alt="Common Time Logo" className="object-contain lg:h-[380px]" />
+      
+        <Link to="/" className="flex items-center ">
+        <img src="/logos/newlogo.png" alt="Common Time Logo" className="object-contain md:scale-70 " />
        
       </Link>
+    
+      
 
       {/* 4. RIGHT NAVIGATION & UTILITIES (Untouched) */}
       <div className="flex flex-1 items-center justify-end h-full">
@@ -171,7 +174,7 @@ export default function Header() {
             <div className="flex flex-col w-full " >
               
               {/* Tab Selector - Using Bai Jamjuree for Structure */}
-              <div className="flex justify-between px-8 py-4 border-b border-gray-300">
+              <div className="flex justify-between px-8 py-2 border-b border-gray-300">
                 {['SHOP', 'LOCATIONS', 'MENU',].map((tab) => (
                   <button 
                     key={tab}

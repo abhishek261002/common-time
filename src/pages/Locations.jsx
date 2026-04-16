@@ -85,69 +85,81 @@ const Locations = () => {
 
     return (
       <Link to={`/locations/${item.slug}`} className="block" style={{ perspective: '1000px' }}>
-        <motion.div
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{ rotateX, rotateY, scale, transformStyle: 'preserve-3d' }}
-          className="relative h-[400px] w-full flex flex-col bg-[#1a1a1a] overflow-hidden rounded-sm transition-shadow duration-700 group-hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] cursor-pointer"
+       <motion.div
+  ref={cardRef}
+  onMouseMove={handleMouseMove}
+  onMouseEnter={handleMouseEnter}
+  onMouseLeave={handleMouseLeave}
+  style={{ 
+    rotateX, 
+    rotateY, 
+    scale, 
+    transformStyle: 'preserve-3d',
+    // Dynamic shadow that moves opposite to the tilt for a realistic 3D lift
+    boxShadow: useTransform(
+      [rotateX, rotateY],
+      ([rX, rY]) => {
+        return `${-rY / 2}px ${rX / 2}px 50px rgba(0,0,0,0.3)`;
+      }
+    )
+  }}
+  className="relative h-[400px] w-full flex flex-col mb-10 md:mb-0 bg-[#1a1a1a] overflow-hidden rounded-sm transition-shadow duration-700 shadow-2xl group-hover:shadow-[0_45px_100px_-15px_rgba(0,0,0,0.6)] cursor-pointer"
+>
+  {/* Image Section (80%) */}
+  <div className="relative h-[80%] w-full overflow-hidden">
+    {/* Animated Inset Viewfinder Corners */}
+    <div className="absolute inset-0 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <div className="absolute top-6 left-6 w-8 h-8 border-t border-l border-[#8b7355]"></div>
+      <div className="absolute top-6 right-6 w-8 h-8 border-t border-r border-[#8b7355]"></div>
+      <div className="absolute bottom-6 left-6 w-8 h-8 border-b border-l border-[#8b7355]"></div>
+      <div className="absolute bottom-6 right-6 w-8 h-8 border-b border-r border-[#8b7355]"></div>
+    </div>
+
+    <img
+      src={item.imageUrl}
+      alt={item.city}
+      className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
+    />
+
+    {/* Glare overlay */}
+    <motion.div
+      className="absolute inset-0 pointer-events-none z-10"
+      style={{
+        background: useTransform(
+          [glareX, glareY],
+          ([gx, gy]) =>
+            `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 60%)`
+        ),
+      }}
+    />
+
+    {/* Grain Texture Overlay */}
+    <div className="absolute inset-0 grain-overlay z-10"></div>
+  </div>
+
+  {/* Text Section (20%) */}
+  <div className="h-[20%] w-full flex items-center justify-between px-10 relative bg-white z-30 overflow-hidden">
+    <div className="flex flex-col">
+      <div className="overflow-hidden">
+        <motion.span
+          initial={{ y: "100%" }}
+          whileInView={{ y: 0 }}
+          className="text-[9px] font-[Garet_Book] uppercase tracking-[0.6em] text-[#8b7355] mb-2 block font-bold"
         >
-          {/* Image Section (80%) */}
-          <div className="relative h-[80%] w-full overflow-hidden">
-            {/* Animated Inset Viewfinder Corners */}
-            <div className="absolute inset-0 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <div className="absolute top-6 left-6 w-8 h-8 border-t border-l border-[#8b7355]"></div>
-              <div className="absolute top-6 right-6 w-8 h-8 border-t border-r border-[#8b7355]"></div>
-              <div className="absolute bottom-6 left-6 w-8 h-8 border-b border-l border-[#8b7355]"></div>
-              <div className="absolute bottom-6 right-6 w-8 h-8 border-b border-r border-[#8b7355]"></div>
-            </div>
+          {item.area}
+        </motion.span>
+      </div>
+      <h4 className="text-3xl md:text-4xl font-[Bai_Jamjuree] font-light text-black tracking-tighter leading-none group-hover:translate-x-2 transition-transform duration-700">
+        {item.city}
+      </h4>
+    </div>
 
-            <img
-              src={item.imageUrl}
-              alt={item.city}
-              className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
-            />
-
-            {/* Glare overlay */}
-            <motion.div
-              className="absolute inset-0 pointer-events-none z-10"
-              style={{
-                background: useTransform(
-                  [glareX, glareY],
-                  ([gx, gy]) =>
-                    `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 60%)`
-                ),
-              }}
-            />
-
-            {/* Grain Texture Overlay */}
-            <div className="absolute inset-0 grain-overlay z-10"></div>
-          </div>
-
-          {/* Text Section (20%) */}
-          <div className="h-[20%] w-full flex items-center justify-between px-10 relative bg-[#1a1a1a] z-30 overflow-hidden">
-            <div className="flex flex-col">
-              <div className="overflow-hidden">
-                <motion.span
-                  initial={{ y: "100%" }}
-                  whileInView={{ y: 0 }}
-                  className="text-[9px] font-[Garet_Book] uppercase tracking-[0.6em] text-[#8b7355] mb-2 block font-bold"
-                >
-                  {item.area}
-                </motion.span>
-              </div>
-              <h4 className="text-3xl md:text-4xl font-[Bai_Jamjuree] font-light text-white tracking-tighter leading-none group-hover:translate-x-2 transition-transform duration-700">
-                {item.city}
-              </h4>
-            </div>
-
-            <div className="relative flex flex-col items-end gap-2">
-              <span className="text-[8px] font-[Garet_Book] uppercase tracking-[0.3em] text-white/30 group-hover:text-white/80 transition-colors duration-500">Enter Space</span>
-              <div className="h-[1px] w-8 bg-[#8b7355] group-hover:w-16 transition-all duration-700"></div>
-            </div>
-          </div>
-        </motion.div>
+    <div className="relative flex flex-col items-end gap-2">
+      <span className="text-[8px] font-[Garet_Book] uppercase tracking-[0.3em] text-black/80 group-hover:text-black/80 transition-colors duration-500">Enter Space</span>
+      <div className="h-[1px] w-8 bg-[#8b7355] group-hover:w-16 transition-all duration-700"></div>
+    </div>
+  </div>
+</motion.div>
       </Link>
     );
   };
@@ -232,12 +244,12 @@ const Locations = () => {
       </section>
         <GalleryMarquee/>
       {/* --- DISCOVER MORE SECTION --- */}
-      <section className="py-32 bg-[#fafaf8]">
+      <section className="pt-32 md:py-32 bg-[#fafaf8]">
         <Container>
           <div className="mb-20 flex items-end justify-between">
             <div className="max-w-md">
               <h3 className="text-[10px] font-[Garet_Book] uppercase tracking-[0.5em] text-[#8b7355] mb-4 font-bold">Indices</h3>
-              <h2 className="text-4xl font-[Bai_Jamjuree] font-light tracking-tighter text-black leading-none">
+              <h2 className="text-3xl font-[Bai_Jamjuree] font-light tracking-tighter text-black leading-none">
                 Other <span className="italic ">Atmospheres.</span>
               </h2>
             </div>

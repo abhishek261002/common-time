@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { menuData as originalData } from "../data/menuData";
-
+import {motion} from  "framer-motion";
 // --- MANUAL TRANSLITERATION MAP FOR HINDI ---
 // This overrides the translation engine for specific coffee terms
 const HINDI_MAP = {
@@ -262,15 +262,18 @@ export default function Menu() {
         <div className="fixed inset-0 top-[70px] md:top-[85px] bg-white z-[40] flex flex-col items-center justify-center overflow-hidden animate-fadeIn">
           <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
           <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-gray-100 rounded-full blur-[120px] animate-pulse"></div>
-
-          <div className="max-w-2xl w-full flex flex-col items-center px-6 relative z-10">
-            <div className="flex items-center justify-center gap-12 mt-16 w-full h-[400px] relative">
+            <p className="mt-2 text-2xl tracking-[0.3em] uppercase font-semibold font-[Bai_Jamjuree]">Select Language</p>
+          <div className="max-w-2xl w-full flex flex-col items-center px-6 relative z-10 ">
+            <div className="flex items-center justify-center gap-12 mt-5 w-full h-[400px] relative">
               <div className="flex flex-col items-center h-72 w-10 relative">
+                
                 <div className="w-[4px] h-full bg-black/10 rounded-full"></div>
                 <div className="absolute w-4 h-4 bg-black rounded-full transition-all duration-150 ease-out left-1/2 -translate-x-1/2 shadow-2xl border-2 border-white" style={{ top: `${scrollProgress * 100}%` }}></div>
               </div>
+              
               <div className="relative w-80 h-full flex flex-col items-center">
                 <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-20 border-y border-black/[0.08] pointer-events-none bg-gray-50/30"></div>
+                
                 <div ref={wheelRef} className="h-full w-full overflow-y-scroll snap-y snap-mandatory no-scrollbar mask-fade-edges py-40">
                   {LANGUAGES.map((l, i) => {
                     const dist = Math.abs(i - activeIdx);
@@ -285,7 +288,7 @@ export default function Menu() {
                 </div>
               </div>
             </div>
-            <p className="mt-20 text-[10px] tracking-[1em] uppercase opacity-20 font-[Bai_Jamjuree]">Select Language</p>
+            
           </div>
         </div>
       )}

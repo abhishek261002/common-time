@@ -99,17 +99,17 @@ export default function Home() {
       {/* <GalleryMarquee /> */}
          <section className="bg-[#fafaf8] py-12 md:py-12 border-b border-black/5">
         <Container>
-          <div className="flex flex-col items-start mb-10 md:mb-10">
+          <div className="flex flex-col items-start mb-10 md:mb-15">
             {/* Sub-label with Shimmer */}
-            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold italic mb-4">
+            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-xs uppercase tracking-[0.2em] font-semibold italic mb-1">
               Curated Selection
             </span>
             
             {/* Main Heading with Shimmer - & remains unchanged */}
             <div className="flex items-center gap-4">
-              <div className="h-[1px] w-6 md:w-12 bg-black/20"></div>
-              <h2 className="text-3xl md:text-4xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
-                <span className="shiny-text py-2 inline-block overflow-visible">Coffee Highlights</span> 
+
+              <h2 className="text-2xl md:text-3xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
+                <span className="shiny-text py-2 inline-block overflow-visible tracking-[0.02em]">Coffee Highlights</span> 
               </h2>
             </div>
           </div>
@@ -123,16 +123,16 @@ export default function Home() {
       {/* --- Objects & Equipment Section with Shimmer --- */}
       <section className="bg-[#fafaf8] pb-12 md:py-12 border-b border-black/5">
         <Container>
-          <div className="flex flex-col items-start mb-10 md:mb-10">
+          <div className="flex flex-col items-start mb-10 md:mb-15">
             {/* Sub-label with Shimmer */}
-            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold italic mb-4">
+            <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-xs uppercase tracking-[0.2em] font-semibold italic mb-1">
               Curated Selection
             </span>
             
             {/* Main Heading with Shimmer - & remains unchanged */}
             <div className="flex items-center gap-4">
-              <div className="h-[1px] w-6 md:w-12 bg-black/20"></div>
-              <h2 className="text-3xl md:text-4xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
+             
+              <h2 className="text-2xl md:text-3xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
                 <span className="shiny-text py-2 inline-block overflow-visible">Objects & Equipment</span> 
               </h2>
             </div>
@@ -150,15 +150,15 @@ export default function Home() {
       <main className="bg-[#fafaf8] min-h-screen py-12 md:py-12">
       <Container>
         {/* Header - Consistent with your homepage style */}
-        <div className="mb-10 md:mb-10 flex flex-col items-start">
-          <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold italic mb-4">
+        <div className="mb-10 md:mb-15 flex flex-col items-start">
+          <span className="shiny-text py-2 inline-block overflow-visible font-[Garet_Book] text-xs uppercase tracking-[0.2em] font-semibold italic mb-1">
             Physical Presence
           </span>
           <div className="flex items-center gap-4">
-            <div className="h-[1px] w-6 md:w-12 bg-black/20"></div>
-            <h1 className="text-3xl md:text-4xl font-light tracking-tighter font-[Bai_Jamjuree] text-black">
-              Our <span className="italic font-normal">Spaces.</span>
-            </h1>
+           
+           <h2 className="text-2xl md:text-3xl font-light tracking-tight font-[Bai_Jamjuree] flex items-baseline gap-3">
+                <span className="shiny-text py-2 inline-block overflow-visible">Our Spaces</span> 
+              </h2>
           </div>
         </div>
 

@@ -8,8 +8,8 @@ export default function HeroSection({
   ctaHref = "/shop",
 }) {
   return (
-    <section className="relative w-full min-h-screen min-h-[380px] overflow-hidden">
-      <video
+    <section className="relative w-full lg:min-h-[608px] min-h-[800px] overflow-hidden">
+      {/* <video
   autoPlay
   muted
   loop
@@ -17,13 +17,15 @@ export default function HeroSection({
   className="absolute inset-0 w-full h-full object-cover"
 >
   <source src="/bg-video/hero-bg.mp4" type="video/mp4" />
+  </video> */}
   {/* Fallback image if video fails to load */}
-  <img
+ 
+
+ <img
     src="/herobg.jpg"
     alt="Hero Background"
     className="absolute inset-0 w-full h-full object-cover"
   />
-</video>
       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent" />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 gap-8">
         <h1 className="text-[20px] font-[Bai_Jamjuree] text-white font-light tracking-[0.02em] leading-tight mb-4">

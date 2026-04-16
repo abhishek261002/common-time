@@ -28,23 +28,23 @@ const Common = () => {
 
       {/* TRIPTYCH BACKGROUND */}
       <div className="absolute inset-0 flex w-full h-full">
-        <div className="flex-1 h-full border-r border-white/5  hidden md:block">
+        {/* <div className="flex-1 h-full border-r border-white/5  hidden md:block">
           <img src="/gallery-marquee/IMG_4885.JPG" className="w-full h-full object-cover opacity-80 " alt="" />
-        </div>
+        </div> */}
 
         {/* CENTER PANEL - The focus area for text */}
         <div className="relative flex-[1.4] md:flex-[1.2] h-full overflow-hidden">
           <div className="absolute inset-0  z-10" />
           <img 
-            src="/gallery-marquee/CT-02.jpg" 
-            className="w-full h-full object-cover opacity-80 scale-105"
+            src="/gallery-marquee/IMG_4545.JPG" 
+            className="w-full h-full object-cover opacity-40 scale-100"
             alt="Center Atmosphere"
           />
         </div>
 
-        <div className="flex-1 h-full border-l border-white/5  hidden md:block">
+        {/* <div className="flex-1 h-full border-l border-white/5  hidden md:block">
           <img src="/gallery-marquee/IMG_4545.JPG" className="w-full h-full object-cover opacity-80 " alt="" />
-        </div>
+        </div> */}
       </div>
 
       {/* MINIMAL TEXT CONTENT - Bound to middle panel */}
@@ -56,19 +56,19 @@ const Common = () => {
           transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
         >
           {/* Top Label */}
-          <p className="font-[Garet_Book] text-[16px] md:text-[16px]  mb-4 text-white">
+          <p className="font-[Garet_Book] text-[12px] md:text-[12px] font-light mb-4 text-white">
             Our Global Journey
           </p>
 
           {/* Main Title */}
-          <h2 className="text-2xl md:text-2xl font-light font-[Bai_Jamjuree] mb-6 tracking-tight">
+          <h2 className="text-xl md:text-xl font-light font-[Bai_Jamjuree] mb-6 tracking-tight">
             "<span className="">Common Time</span>"
           </h2>
 
           {/* Narrative Content - Tightened for center fit */}
           <div className="space-y-4">
-            <p className="font-[Garet_Book] text-sm md:text-sm leading-relaxed tracking-wide text-white">
-              A curated interval where slow brews meet quiet mornings.
+            <p className="font-[Garet_Book] text-xs md:text-xs leading-relaxed tracking-wide text-white">
+              A curated interval where slow brews meet quiet <br /> mornings.
 Profound connections found in the deliberate space between.
             </p>
 
